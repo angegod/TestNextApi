@@ -1,0 +1,6 @@
+@tailwind utilities;
+body{
+    background-color: #313030;
+    margin-top: 15px;
+    color: #b0acac;
+}
