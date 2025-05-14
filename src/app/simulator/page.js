@@ -1,17 +1,19 @@
-import AffixList from '../data/AffixList';
-import characters from '../data/characters';
+"use client"
+import AffixList from '../../data/AffixList';
+import characters from '../../data/characters';
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
-import { Helmet } from 'react-helmet';
-import '../css/simulator.css';
-import AffixName from '../data/AffixName';
+import { usePathname } from 'next/navigation';
+import '../../css/simulator.css';
+import AffixName from '../../data/AffixName';
 
-import Result from './Result';
-import { StandDetails ,ShowStand } from './StandDetails';
-import { RelicData_simuldate as RelicData} from './RelicData';
-import { PastPreview_simulator as PastPreview } from './PastPreview';
-import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from './Select';
-import { Tooltip } from 'react-tooltip'
+import Result from '../../components/Result';
+import { StandDetails ,ShowStand } from '../../components/StandDetails';
+import { RelicData_simuldate as RelicData} from '../../components/RelicData';
+import { PastPreview_simulator as PastPreview } from '../../components/PastPreview';
+import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '../../components/Select';
+import { Tooltip } from 'react-tooltip';
+
 
 const SimulatorContext = createContext();
 
@@ -263,7 +265,7 @@ function Simulator(){
         })
         
         //將運行結果丟到背景執行
-        let worker=new Worker(new URL('../worker/worker.js', import.meta.url));
+        let worker = new Worker('/worker/worker.js');
         let postData={
             charID:charID,
             MainData:MainSelectOptions,
@@ -313,7 +315,7 @@ function Simulator(){
     function simulate(){
         let isCheck=true;
         //將運行結果丟到背景執行 跟模擬所有組合的worker分開
-        let worker=new Worker(new URL('../worker/worker.js', import.meta.url));
+        let worker=new Worker('../worker/worker.js');
         let MainAffix=AffixName.find((a)=>a.name===relic.main_affix);
         let SubData=[];
 
@@ -414,11 +416,6 @@ function Simulator(){
     return(
     <SimulatorContext.Provider value={SimulatorStatus}>
         <div className='w-4/5 mx-auto max-[600px]:w-[90%]'>
-            <Helmet>
-                <title>崩鐵--遺器重洗模擬器</title>
-                <meta name="description" content="崩鐵--遺器重洗模擬器" />
-                <meta name="keywords" content="遺器重洗、遺器重洗模擬器" />
-            </Helmet>
             <h1 className='text-red-500 font-bold text-2xl'>遺器重洗模擬器</h1>
             <div className='flex flex-row flex-wrap'>
                 <div className='flex flex-col mt-2 w-3/5 max-[900px]:w-[100%]'>

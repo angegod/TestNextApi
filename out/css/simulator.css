@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.processBtn{
+    color: theme('colors.white');
+    border-color: theme('colors.white');
+    border-radius: theme('borderRadius.md');
+    padding-left: 2px;
+    padding-right: 2px;
+    border-width: 2px;
+}
+.processBtn:hover{
+    color: theme('colors.yellow.500');
+    border-color: theme('colors.yellow.500');
+}
+
+.deleteBtn{
+    color: theme('colors.red.600');
+    border-color: theme('colors.red.600');
+    border-radius: theme('borderRadius.md');
+    border-width: 2px;
+}
+
+.deleteBtn:hover{
+    color: theme('colors.red.500');
+    border-color: theme('colors.red.500');
+    border-radius: theme('borderRadius.md');
+}
+
+/*隱藏滾軸*/
+
+.hiddenScrollBar{
+    scrollbar-width: none;
+}
+
+select:disabled,input:disabled{
+    background-color:gray;
+    color: white;
+}
+
+button:disabled{
+    opacity: 0.5;
+}
+
+.processBtn:disabled:hover{
+    color: white;
+    border-color: inherit;
+}
+
+select.graySelect{
+    background-color: inherit;
+    outline: none;
+    border-bottom: 1px white solid;
+    color: white;
+}
+
+select.graySelect option{
+    background-color: rgb(36, 36, 36);
+    color: white;
+}
+
+/*隱藏input number旁邊的調整按鈕*/
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*bg-inherit text-white border-b border-b-white outline-none*/
+
+/*繼承背景顏色的input*/
+.bgInput{
+    background-color: inherit;
+    color: theme('colors.white');
+    border-bottom-color: theme('colors.white');
+    border-bottom-width: 1px;
+    outline: none;
+}
+
+.css-rbklcn-MuiResponsiveChart-container svg{
+    width: 200px;
+    height: 200px;
+}
+
+.hintIcon{
+    width: 20px;
+    height: 20px;
+    background-color: rgb(36, 35, 35);
+    color: white;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

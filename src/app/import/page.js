@@ -3,7 +3,7 @@ import React, { useEffect, useReducer , createContext } from 'react';
 import characters from '../../data/characters';
 import AffixName from '../../data/AffixName';
 import { useState ,useRef,useCallback } from 'react';
-import '@/css/simulator.css';
+import '../../css/simulator.css';
 import axios from 'axios';
 import { Tooltip } from 'react-tooltip'
 
