@@ -1,3 +1,4 @@
+"use client"
 import React,{useContext, useEffect, useState} from 'react';
 import AffixList from '../data/AffixList';
 import characters from '../data/characters';
