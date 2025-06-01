@@ -68,7 +68,7 @@ function MainMenu(){
                                 <div className='flex flex-col bg-gray-700 rounded-sm hover:bg-gray-600'>
                                     <div className='flex flex-col justify-center my-2'>
                                         <Image 
-                                            src={"/image/"+m.image} // 注意開頭要加 `/`
+                                            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/${m.image}`}
                                             alt="Logo"
                                             width={200}
                                             height={200}
