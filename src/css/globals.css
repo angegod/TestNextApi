@@ -1,6 +1,21 @@
-@tailwind utilities;
+@import "tailwindcss";
+
 body{
     background-color: #313030;
-    margin-top: 15px;
     color: #b0acac;
+}
+
+.arrow-down-box::after {
+    content: '';
+    position: absolute;
+    bottom: -10px; /* 箭頭高度的一半往下 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+    background-color: transparent;
+
+    /* 裁切出一個向下的箭頭形狀 */
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    @apply bg-gray-700
 }

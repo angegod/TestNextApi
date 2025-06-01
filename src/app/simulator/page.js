@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import AffixList from '../../data/AffixList';
 import characters from '../../data/characters';
 import React, { createContext, useContext, useEffect, useRef } from 'react';
@@ -12,10 +12,12 @@ import { StandDetails ,ShowStand } from '../../components/StandDetails';
 import { RelicData_simuldate as RelicData} from '../../components/RelicData';
 import { PastPreview_simulator as PastPreview } from '../../components/PastPreview';
 import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '../../components/Select';
+import SubAffixHint from '@/components/Hint/SubAffixHint';
+import HintSimulator from '@/components/Hint/HintSimulator';
 import { Tooltip } from 'react-tooltip';
 
-
-const SimulatorContext = createContext();
+import SiteContext from '@/context/SiteContext';
+import { useStatusToast } from '@/context/StatusMsg';
 
 //遺器強化模擬器
 function Simulator(){
@@ -45,6 +47,9 @@ function Simulator(){
     //模擬強化相關數據
     const [simulatorData,setSimulatorData]=useState({});
 
+    //共用statusMsg
+    const {showStatus,updateStatus,hideStatus}=useStatusToast();
+
     //找到的遺器
     const [relic,setRelic]=useState();
 
@@ -56,12 +61,11 @@ function Simulator(){
     const [isSaveAble,setIsSaveAble]=useState(false);
     const [isChangeAble,setIsChangeAble]=useState(true);
 
-    //router相關
     const pathname = usePathname();
 
     useEffect(()=>{
         init();
-    },[pathname])
+    },[pathname]);
 
     useEffect(() => {
         if(partsIndex!==undefined&&Number.isInteger(partsIndex)){
@@ -72,6 +76,7 @@ function Simulator(){
     }, [partsIndex]); 
 
     function init(){
+
         SubData.current=[];
         for(var i=0;i<=3;i++){
             let data={
@@ -85,6 +90,9 @@ function Simulator(){
         }
         
         let history=JSON.parse(localStorage.getItem('HistoryData'));
+
+        if(!history) return;
+        showStatus('正在載入過往紀錄中......');
         
         //為了避免更新迭代而造成歷史紀錄格式上的問題 
         //必須要核對重大版本代號 如果版本不一致也不予顯示並且刪除
@@ -93,7 +101,7 @@ function Simulator(){
             history=history.filter((h)=>h.version===version);
             localStorage.setItem('HistoryData',JSON.stringify(history));
             historyData.current=history;
-            setStatusMsg('先前紀錄已匯入!!');
+            updateStatus('先前紀錄已匯入!!','success');
         }
     }
 
@@ -101,10 +109,10 @@ function Simulator(){
     function updateHistory(index){
         //如果刪除紀錄是目前顯示的 則會清空目前畫面上的
         historyData.current=historyData.current.filter((item,i)=>i!==index);
-        setStatusMsg('正在處理中.....');
+        showStatus('正在處理中......');
         //強制觸發刷新紀錄
         setTimeout(() => {
-            setStatusMsg('成功刪除該紀錄!!');
+            updateStatus('成功刪除該紀錄!!','success')
         }, 0);
         localStorage.setItem('HistoryData',JSON.stringify(historyData.current));
     }
@@ -130,12 +138,12 @@ function Simulator(){
         
         //如果當前沒有任何資料則不予匯入
         if(!PieNums||ExpRate===undefined||!Rrank||Rscore===undefined){
-            setStatusMsg("當前沒有任何數據，不予儲存!!");
+            updateStatus('當前沒有任何數據，不予儲存!!','error');
             return;
         }
          //如果沒有選擇沒有任何腳色
         if(!charID){
-            setStatusMsg("沒有選擇任何腳色!!");
+            updateStatus("沒有選擇任何腳色!!",'error');
             return;
         }
         
@@ -160,7 +168,7 @@ function Simulator(){
         //利用深拷貝區分原有資料
         let oldHistory=JSON.parse(JSON.stringify(historyData.current));
         historyData.current.push(data);
-        setStatusMsg('已儲存');
+        updateStatus("已儲存",'success');
         const targetElement = document.getElementById('historyData');
         targetElement.scrollIntoView({ behavior: 'smooth' });
         
@@ -176,8 +184,8 @@ function Simulator(){
         let data=historyData.current[index];
         setRank(data.rank);
         setExpRate(data.expRate);
-        setRscore(data.score)
-        setStatusMsg('資料替換完畢!!');
+        setRscore(data.score);
+        updateStatus('資料替換完畢!!','success');
         setPieNums(data.pieData);
         standDetails.current=data.stand;
         setRelic(data.relic);
@@ -223,12 +231,13 @@ function Simulator(){
         console.log(SubData.current);
         SubData.current.some((s,i)=>{
             if(s.subaffix===MainSelectOptions){
-                alert(`第${i+1}個詞條選擇\n副詞條不可選擇與主詞條相同的詞條\n請再重新選擇!!`);
+                //alert(`第${i+1}個詞條選擇\n副詞條不可選擇與主詞條相同的詞條\n請再重新選擇!!`);
+                updateStatus(`第${i+1}個詞條:副詞條不可選擇與主詞條相同的詞條\n請再重新選擇!!`,'error');
                 errors=true;
                 return true;
             }
             else if(s.subaffix==='undefined'||s.subaffix===0){
-                alert(`您還有副詞條沒有選擇\n請再重新選擇!!`);
+                updateStatus(`您還有副詞條沒有選擇\n請再重新選擇!!`,'error');
                 errors=true;
                 return true;
             }
@@ -265,7 +274,7 @@ function Simulator(){
         })
         
         //將運行結果丟到背景執行
-        let worker = new Worker('/worker/worker.js');
+        let worker=new Worker(new URL('../../worker/worker.js', import.meta.url));
         let postData={
             charID:charID,
             MainData:MainSelectOptions,
@@ -279,7 +288,7 @@ function Simulator(){
         setIsSaveAble(false);
         setProcessBtn(false);
         setIsChangeAble(false);
-        setStatusMsg('數據計算處理中!!');
+        showStatus('數據計算處理中!!');
         clearData();
         worker.postMessage(postData);
 
@@ -288,7 +297,7 @@ function Simulator(){
             
             setExpRate(event.data.expRate);
             setRscore(event.data.relicscore)
-            setStatusMsg('計算完畢!!');
+            updateStatus('計算完畢!!','success');
             setPieNums(event.data.returnData);
             setRank(event.data.relicrank);
             saveRelic();
@@ -315,7 +324,7 @@ function Simulator(){
     function simulate(){
         let isCheck=true;
         //將運行結果丟到背景執行 跟模擬所有組合的worker分開
-        let worker=new Worker('../worker/worker.js');
+        let worker=new Worker(new URL('../../worker/worker.js', import.meta.url));
         let MainAffix=AffixName.find((a)=>a.name===relic.main_affix);
         let SubData=[];
 
@@ -336,7 +345,7 @@ function Simulator(){
         selfStand.forEach((s)=>{
             if(s.value===''){
                 isCheck=false;
-                setStatusMsg('加權指數不可為空或其他非法型式');
+                updateStatus('加權指數不可為空或其他非法型式','error');
             }
         });
         
@@ -414,123 +423,118 @@ function Simulator(){
     }
     
     return(
-    <SimulatorContext.Provider value={SimulatorStatus}>
+    <SiteContext.Provider value={SimulatorStatus}>
         <div className='w-4/5 mx-auto max-[600px]:w-[90%]'>
-            <h1 className='text-red-500 font-bold text-2xl'>遺器重洗模擬器</h1>
-            <div className='flex flex-row flex-wrap'>
-                <div className='flex flex-col mt-2 w-3/5 max-[900px]:w-[100%]'>
-                    <div className='flex flex-row [&>*]:mr-2 my-3 items-center max-[400px]:!flex-col max-[400px]:items-start'>
-                        <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
-                            <span className='text-white'>Characters 腳色:</span>
-                        </div>
-                        <div className='flex flex-row items-center'>
-                            <CharSelect context={SimulatorContext}/>
-                            <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
-                                <span className='text-white'>?</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`my-1 ${(Number.isInteger(charID)&&charID!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
-                        <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
-                            <span className='text-white'>Parts 部位:</span>
-                        </div>
-                        <div className='flex flex-row items-center'>
-                            <PartSelect context={SimulatorContext}/>
-                            <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="PartSelectHint">
-                                <span className='text-white'>?</span>
-                            </div>   
-                        </div>
-                    </div>
-                    <div className={`my-1 ${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:items-start max-[400px]:!flex-col`}>
-                        <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
-                            <span className='text-white'>MainAffix 主屬性:</span>
-                        </div>
-                        <div className='flex flex-row items-center'>
-                            <MainAffixSelect context={SimulatorContext}/>
-                            <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)!==1&&(parseInt(partsIndex)!==2)?'':'hidden')}`} data-tooltip-id="MainAffixHint">
-                                <span className='text-white'>?</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={`my-1 ${(MainSelectOptions!==undefined&&MainSelectOptions!=='undefined'&&partsIndex!==undefined)?'':'hidden'} 
-                            mt-2 [&>*]:mr-2 flex flex-row max-[600px]:!flex-col max-[600px]:text-center max-[400px]:text-left`}>
-                        <div className='text-right w-[200px] max-[600px]:w-[100%] max-[600px]:text-center max-[400px]:text-left'>
-                            <span className='text-white'>SubAffix 副屬性:</span>
-                        </div>
-                        <div className='flex flex-row items-start'>
-                            <div className='flex flex-col'>
-                                <SubAffixSelect index={0} context={SimulatorContext}/>
-                                <SubAffixSelect index={1} context={SimulatorContext}/>
-                                <SubAffixSelect index={2} context={SimulatorContext}/>
-                                <SubAffixSelect index={3} context={SimulatorContext}/>
-                            </div>
-                            <div className='hintIcon ml-1 mt-1 overflow-visible'data-tooltip-id="SubAffixHint">
-                                <span className='text-white'>?</span>
-                            </div>  
-                        </div>
-                    </div>
-                    <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col ${(partsIndex===undefined)?'hidden':''}`}>
-                        <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
-                            <span className='text-white'>Affix 有效詞條:</span>
-                        </div>
-                        <div className='flex flex-row items-center'>
-                            <StandardSelect context={SimulatorContext}/>
-                            <div className='hintIcon ml-1 overflow-visible' data-tooltip-id="StandardHint">
-                                <span className='text-white'>?</span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
-                        <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
-                            <span className='text-white'>Params 參數:</span>
-                        </div>
-                        <ShowStand context={SimulatorContext}/>
-                    </div>
-                    <div className={`${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 mb-2 max-w-[400px] flex flex-row [&>*]:mr-2 justify-end max-[400px]:justify-start`}>
-                        <div className='flex flex-row mt-1'>
-                            <button className='processBtn mr-2 whitespace-nowrap' 
-                                onClick={()=>calScore()} 
-                                disabled={!processBtn}>計算分數</button>
-                            <button className='processBtn mr-2 whitespace-nowrap' 
-                            onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
-                        </div>
-                    </div>
-                </div>
-                <div className='w-2/5 max-w-[400px] flex flex-col max-[900px]:w-[100%] max-[600px]:my-3'>
-                    <h2 className='text-red-600 font-bold text-lg'>使用說明</h2>
-                    <ul className='[&>li]:text-white list-decimal [&>li]:ml-2 max-[400px]:[&>li]:text-sm'>
-                        <li>此工具主要目的是給予一些想要重洗詞條的人參考</li>
-                        <li>翻盤機率是指說該遺器透過重洗詞條道具後導致遺器分數變高的機率為何</li>
-                        <li>目前遺器只支援計算五星遺器</li>
-                        <li>此工具相關數據仍有更改的可能，敬請見諒!</li>
-                        <li>操作說明可以參考
-                        <a href='https://home.gamer.com.tw/artwork.php?sn=6065608' className='!underline'>這篇</a></li>
-                    </ul>
+            <div className='flex flex-row items-center'>
+                <h1 className='text-red-600 font-bold text-2xl'>遺器重洗模擬器</h1>
+                <div className='hintIcon ml-2 overflow-visible'
+                    data-tooltip-id="SimulatorHint">
+                    <span className='text-white'>?</span>
                 </div>
             </div>
-            <div className='flex flex-row mb-3 flex-wrap'>
-                <div className={`w-[100%] max-[930px]:w-[100%] border-t-4 border-gray-600 p-2 my-4 ${(!historyData.current||historyData.current.length===0)?'hidden':''}`}
+            <div className='flex flex-row flex-wrap'>
+                <div className='flex flex-row flex-wrap w-1/2 max-[1200px]:w-[100%]'>
+                    <div className='flex flex-col mt-2'>
+                        <div className='flex flex-row [&>*]:mr-2 my-3 items-center max-[400px]:!flex-col max-[400px]:items-start'>
+                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                <span className='text-white'>Characters 腳色:</span>
+                            </div>
+                            <div className='flex flex-row items-center'>
+                                <CharSelect />
+                                <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
+                                    <span className='text-white'>?</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`my-1 ${(Number.isInteger(charID)&&charID!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
+                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                <span className='text-white'>Parts 部位:</span>
+                            </div>
+                            <div className='flex flex-row items-center'>
+                                <PartSelect />
+                                <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="PartSelectHint">
+                                    <span className='text-white'>?</span>
+                                </div>   
+                            </div>
+                        </div>
+                        <div className={`my-1 ${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:items-start max-[400px]:!flex-col`}>
+                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                <span className='text-white'>Main 主屬性:</span>
+                            </div>
+                            <div className='flex flex-row items-center'>
+                                <MainAffixSelect />
+                                <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)!==1&&(parseInt(partsIndex)!==2)?'':'hidden')}`} data-tooltip-id="MainAffixHint">
+                                    <span className='text-white'>?</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`my-1 ${(MainSelectOptions!==undefined&&MainSelectOptions!=='undefined'&&partsIndex!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[600px]:!flex-col max-[600px]:text-center max-[400px]:text-left`}>
+                            <div className='text-right w-[200px] max-[600px]:w-[100%] max-[600px]:text-center max-[400px]:text-left'>
+                                <span className='text-white'>SubAffix 副屬性:</span>
+                            </div>
+                            <div className='flex flex-row items-start justify-center'>
+                                <div className='flex flex-col'>
+                                    <SubAffixSelect index={0} />
+                                    <SubAffixSelect index={1} />
+                                    <SubAffixSelect index={2} />
+                                    <SubAffixSelect index={3} />
+                                </div>
+                                <div className='hintIcon ml-1 mt-1 overflow-visible'data-tooltip-id="SubAffixHint">
+                                    <span className='text-white'>?</span>
+                                </div>  
+                            </div>
+                        </div>
+                        <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col ${(partsIndex===undefined)?'hidden':''}`}>
+                            <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
+                                <span className='text-white'>Affix 有效詞條:</span>
+                            </div>
+                            <div className='flex flex-row items-center'>
+                                <StandardSelect />
+                                <div className='hintIcon ml-1 overflow-visible' data-tooltip-id="StandardHint">
+                                    <span className='text-white'>?</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
+                            <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
+                                <span className='text-white'>Params 參數:</span>
+                            </div>
+                            <ShowStand />
+                        </div>
+                        <div className={`${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 mb-2 max-w-[400px] flex flex-row [&>*]:mr-2 justify-end max-[400px]:justify-start`}>
+                            <div className='flex flex-row mt-1'>
+                                <button className='processBtn mr-2 whitespace-nowrap' 
+                                    onClick={()=>calScore()} 
+                                    disabled={!processBtn}>計算分數</button>
+                                <button className='processBtn mr-2 whitespace-nowrap' 
+                                onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className={`w-1/2 max-[1200px]:w-[100%]  my-4 ${(!historyData.current||historyData.current.length===0)?'hidden':''}`}
                     id="historyData" >
                     <div className='flex flex-row items-center'>
-                        <span className='text-red-500 text-lg font-bold'>過往紀錄</span>
+                        <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
                         <div className='hintIcon ml-2 overflow-visible'
                             data-tooltip-id="HistoryHint">
                             <span className='text-white'>?</span>
                         </div>
                     </div>
-                    <div className='flex flex-row flex-wrap h-[300px] overflow-y-scroll hiddenScrollBar max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
-                        <HistoryList context={SimulatorContext}/>
+                    <div className='flex flex-row flex-wrap h-max max-h-[600px] overflow-y-scroll hiddenScrollBar max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
+                        <HistoryList />
                     </div>
                 </div>
-                <div className='border-t-4 border-gray-600 w-[100%] flex flex-row'>
-                    <div className={`mt-3 flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[400px]:w-[100%]`} >
-                        <RelicData  context={SimulatorContext} mode={'Simulator'} button={true}/>
+            </div>
+            <div className='flex flex-row mb-3 flex-wrap'>
+                <div className={`border-t-4 border-gray-600 w-[100%] flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
+                    <div className={`mt-3 flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
+                        <RelicData   mode={'Simulator'} button={true}/>
                     </div>
-                    <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[400px]:w-[100%]`} >
-                        <StandDetails context={SimulatorContext}/>
+                    <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
+                        <StandDetails />
                     </div>
-                    <div className='mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%]' id="resultDetails">
+                    <div className='mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] max-[500px]:w-4/5 max-[500px]:mx-auto' id="resultDetails">
                         <Result ExpRate={ExpRate} 
                                 Rscore={Rscore} 
                                 statusMsg={statusMsg} 
@@ -568,25 +572,7 @@ function Simulator(){
             <Tooltip id="SubAffixHint"  
                     place="right-start" 
                     render={()=>
-                        <div className='flex flex-col max-w-[230px] '>
-                            <div className='[&>span]:text-white flex flex-col'>
-                                <span>根據遺器現有狀況</span>
-                                <span>依序輸入詞條種類、詞條數值、強化次數</span>
-                                <span className='!text-yellow-500'>詞條數值不用輸入%</span>
-                                <span className='!text-yellow-500'>如果該詞條沒有被強化過，則強化次數打上0即可</span>
-                            </div>
-                            <div className='mt-2 [&>span]:text-white flex flex-col'>
-                                <span>例如:今天有一個詞條為</span>
-                                <span className='!text-green-500'>暴擊傷害 13.4% 2</span>
-                                <span>那麼只要key上</span>
-                                <span className='!text-green-500'>暴擊傷害 13.4 2</span>
-                            </div>
-                            <div className='mt-2 [&>span]:text-red-500 flex flex-col'>
-                                <span>注意事項:</span>
-                                <span>1.副詞條彼此間不能重複</span>
-                                <span>2.主詞條跟副詞條不可重複</span>
-                            </div>
-                        </div>
+                        <SubAffixHint />
                     }/>
             <Tooltip id="StandardHint" 
                     place="right-start"
@@ -598,13 +584,33 @@ function Simulator(){
                         </div>
                     }/>
             <Tooltip id="HistoryHint"  
-                place="right-bottom"
+                place="top-center"
                 render={()=>
-                    <div className='flex flex-col [&>span]:text-white max-w-[250px] p-1'>
-                        <span>"檢視"可以查看曾經查詢出來的資訊</span>
-                        <span>"刪除"則會刪除該筆紀錄</span>
-                        <span className='!text-red-500'>"過往紀錄"最多只保留6筆</span>
-                        <span className='!text-yellow-500'>如果在已有6筆資料的情況再新增，則會從最舊的紀錄覆蓋掉</span>
+                    <div className='flex flex-col max-w-[250px] p-1'>
+                        <div>
+                            <span className='text-white'>此區塊可以查看過往查詢紀錄，下面為個別功能相關簡述。</span>
+                        </div>
+                        <div className='mt-2 flex flex-col'>
+                            <span className='text-md font-bold text-white'>檢視</span>
+                            <span>可以查看曾經查詢出來的資訊、包括遺器、評分標準等</span>
+                        </div>
+                        <div className='mt-2 flex flex-col'>
+                            <div>
+                                <span className='text-md font-bold text-white'>刪除</span>
+                            </div>
+                            <div>
+                                <span>刪除該筆紀錄</span>
+                            </div>
+                        </div>
+                        <div className='mt-2 flex flex-col'>
+                            <div>
+                                <span className='text-md font-bold text-white'>注意事項</span>
+                            </div>
+                            <div className='flex flex-col'>
+                                <span className='!text-red-500'>"過往紀錄"最多只保留6筆</span>
+                                <span className='!text-yellow-500'>如果在已有6筆資料的情況再新增，則會從最舊的紀錄開始覆蓋掉</span>
+                            </div>
+                        </div>
                     </div>
                 }/>
             <Tooltip id="RelicDataHint"  
@@ -626,19 +632,24 @@ function Simulator(){
                         </div>
                     </div>
                 }/>
+            <Tooltip id="SimulatorHint"
+                    place='right-start'
+                    render={()=><HintSimulator/>}
+                    clickable={true}/>
+            
         </div>
-    </SimulatorContext.Provider>)
+    </SiteContext.Provider>)
 }
 
 //歷史紀錄清單
-const HistoryList=({context})=>{
-    const {historyData} = useContext(context)
+const HistoryList=()=>{
+    const {historyData} = useContext(SiteContext)
     if(historyData){
         return(
             historyData.map((item,i)=>
                 <PastPreview index={i} 
                             data={item}    
-                            context={context}
+                            context={SiteContext}
                             key={'historyData'+i}/>
             )
         )
@@ -650,4 +661,3 @@ const HistoryList=({context})=>{
 
 
 export default Simulator;
-

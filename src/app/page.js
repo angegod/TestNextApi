@@ -4,10 +4,11 @@ export const metadata = {
   keywords: ['遺器重洗', '遺器重洗模擬', 'relic enchant'],
 };
 
-import Simulator from "./Simulator";
+import Simulator from "./simulator/page"
 
 export default function Page() {
   return (
-      <Simulator/>
+    <Simulator/>
+
   );
 }

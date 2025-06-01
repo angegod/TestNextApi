@@ -1,15 +1,15 @@
 import React, { Component,useCallback,useContext,useMemo } from 'react';
 import {PastPreview} from './PastPreview';
+import SiteContext from '../context/SiteContext';
 
-const PastPreviewList=React.memo(({context})=>{
-    const {historyData}=useContext(context);
+const PastPreviewList=React.memo(()=>{
+    const {historyData}=useContext(SiteContext);
 
     if(historyData.length!==0){
         const renderList=historyData.map((item,i)=>{
             return(
                 <PastPreview    index={i}
                                 data={item}
-                                context={context}
                                 key={'history' + i} />
             )
         })

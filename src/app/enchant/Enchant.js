@@ -7,6 +7,7 @@ import '../../css/enchant.css';
 import { StandDetails } from '../../components/StandDetails';
 import { RelicData, RelicData_simuldate } from '../../components/RelicData';
 import { PieChart } from '@mui/x-charts/PieChart';
+import SiteContext from '@/context/SiteContext';
 const EnchantContext = createContext();
 
 //此物件為單次模擬隨機強化後的結果
@@ -20,8 +21,12 @@ const Enchant=React.memo(()=>{
     //模擬強化相關數據
     const [simulatorData,setSimulatorData]=useState({oldData:null,newData:null});
     const [statics,setStatics]=useState(undefined);
+    
     //強化次數
     const [count,setCount]=useState(0);
+
+    //成功翻盤次數
+    const [successCount,setSuccessCount]=useState(0);
 
     const scoreStand=[
         {rank:'S+',stand:85,color:'rgb(239, 68, 68)',tag:'S+'},
@@ -186,9 +191,17 @@ const Enchant=React.memo(()=>{
                     },
                     newData:event.data
                 });
+
+                setCount((c)=>c+=1);
+
+                //如果該次強化超過原有分數 則成功次數+1
+                if(simulatorData.oldData!==null){
+                    if(parseInt(event.data.relicscore) > parseInt(simulatorData.oldData.relicscore))
+                        setSuccessCount((c)=>c+=1);
+                }
             };
 
-            setCount((c)=>c+=1);
+           
         }
     }
 
@@ -259,6 +272,12 @@ const Enchant=React.memo(()=>{
                 });
 
                 setCount((c)=>c+=1);
+
+                //如果該次強化超過原有分數 則成功次數+1
+                if(simulatorData.oldData!==null){
+                    if(parseInt(event.data.relicscore) > parseInt(simulatorData.oldData.relicscore))
+                        setSuccessCount((c)=>c+=1);
+                }
             };
         }
     }
@@ -270,6 +289,8 @@ const Enchant=React.memo(()=>{
                 oldData:simulatorData.newData,
                 newData:null
             });
+
+            setSuccessCount(0);
         }
     }
 
@@ -291,6 +312,7 @@ const Enchant=React.memo(()=>{
     function reInit(){
         //將counter歸0
         setCount(0);
+        setSuccessCount(0);
 
         //還原至一開始記錄
         setSimulatorData({oldData:relicBackUp.current,newData:null});
@@ -325,18 +347,18 @@ const Enchant=React.memo(()=>{
     };
     
     return(
-        <EnchantContext.Provider value={EnchantStatus}>
+        <SiteContext.Provider value={EnchantStatus}>
             <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[90%]'>
                 <div className="w-[100%] border-gray-600 my-4 justify-center flex flex-row flex-wrap max-[900px]:flex-col">
                     <div className='flex flex-row flex-wrap w-1/2 max-[900px]:w-[100%]'>
                         <div className='flex flex-row w-1/2 max-[900px]:w-1/2 max-[400px]:w-[100%]'>
                             {(mode==="Importer")?
-                                <RelicData context={EnchantContext} />:
-                                <RelicData_simuldate context={EnchantContext} />}
+                                <RelicData  />:
+                                <RelicData_simuldate />}
                             
                         </div>
                         <div className='w-1/2 max-[900px]:w-1/2 max-[400px]:w-[100%]'>
-                            <StandDetails context={EnchantContext}/>
+                            <StandDetails />
                         </div>
                     </div>
                     <div className='w-1/2 max-[900px]:w-[100%]'>
@@ -353,13 +375,13 @@ const Enchant=React.memo(()=>{
                             {ResultSection}
                         </div>
                         <div>
-                            <Pie PieNums={statics}/> 
+                            <Pie PieNums={statics} successCount={successCount}/> 
                         </div>
                     </div>
                 </div>
                
             </div>
-        </EnchantContext.Provider>
+        </SiteContext.Provider>
     )
      
 });
@@ -446,7 +468,7 @@ const DataList=React.memo(({standDetails,data,title})=>{
     
 });
 
-const Pie=React.memo(({PieNums})=>{
+const Pie=React.memo(({PieNums,successCount})=>{
     if(PieNums!==undefined){
         const pieParams = {
             height: 200,
@@ -462,7 +484,7 @@ const Pie=React.memo(({PieNums})=>{
                         {
                             innerRadius: 20,
                             arcLabelMinAngle: 35,
-                            arcLabel: (item) => `${item.value}%`,
+                            arcLabel: (item) => `${item.value}次`,
                             data: PieNums,
                         }
                     ]}  {...pieParams} />
@@ -472,15 +494,23 @@ const Pie=React.memo(({PieNums})=>{
                             <span className='text-amber-700 font-bold text-lg'>模擬次數</span>
                         </div>
                         <div className='text-center'>
-                        {PieNums.map((p,i)=>{
-                            if(p.value!==0)
-                                return(
-                                    <div className='my-1 flex flex-row [&>*]:max-[500px]:w-[100px] [&>*]:max-[500px]:text-center' key={'pieNums'+i}>
-                                        <div style={{color:p.color}} className='w-[30px] text-left '>{`${p.tag}`}</div>
-                                        <div style={{color:p.color}} className='w-[70px] text-right'>{`${p.value}次`}</div>
-                                    </div>
-                                )
-                        })}
+                            {PieNums.map((p,i)=>{
+                                if(p.value!==0)
+                                    return(
+                                        <div className='my-1 flex flex-row [&>*]:max-[500px]:w-[100px] [&>*]:max-[500px]:text-center' key={'pieNums'+i}>
+                                            <div style={{color:p.color}} className='w-[30px] text-left '>{`${p.tag}`}</div>
+                                            <div style={{color:p.color}} className='w-[70px] text-right'>{`${p.value}次`}</div>
+                                        </div>
+                                    )
+                            })}
+                        </div>
+                        <div>
+                            <div className='flex justify-start max-[500px]:justify-center'>
+                                <span className='text-amber-700 font-bold text-lg'>翻盤次數</span>
+                            </div>
+                            <div className='flex justify-start max-[500px]:justify-center'>
+                                <span className='text-white'>{successCount}次</span>
+                            </div>
                         </div>
                     </div>
                

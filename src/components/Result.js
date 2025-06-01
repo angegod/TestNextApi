@@ -2,17 +2,14 @@ import React,{useMemo} from 'react';
 import { Tooltip } from 'react-tooltip';
 import { PieChart } from '@mui/x-charts/PieChart';
 
-const Result = React.memo(({ ExpRate, Rrank, PieNums, statusMsg, Rscore }) => {
+const Result = React.memo(({ ExpRate, Rrank, PieNums, Rscore }) => {
     const hue = ExpRate * 120;
     const bgColor =`hsl(${hue}, 100%, 50%)`;
     const renderContent = useMemo(() => {
         if (ExpRate !== undefined && Rrank !== undefined && PieNums !== undefined && Rscore !== undefined) {
             return (
-                <div className={`w-[100%] min-w-[400px] mb-5 my-1 ${(statusMsg !== undefined) ? '' : 'hidden'} max-[500px]:w-[330px] max-[400px]:w-[95%] max-[400px]:min-w-0`}>
+                <div className={`w-[100%] min-w-[400px] mb-5 my-1 ${(ExpRate !== undefined) ? '' : 'hidden'} max-[500px]:w-[330px] max-[400px]:w-[95%] max-[400px]:min-w-0`}>
                     <div className='flex flex-col'>
-                        <div className={`${(statusMsg !== undefined) ? '' : 'hidden'}`}>
-                            <span className='text-red-500 font-bold text-lg'>{statusMsg}</span>
-                        </div>
                         <div className={`${(ExpRate !== undefined) ? '' : 'hidden'} mt-2 flex flex-row items-center`}>     
                             <div className='text-white flex flex-row'>
                                 <span>遺器評級:</span>
@@ -48,7 +45,7 @@ const Result = React.memo(({ ExpRate, Rrank, PieNums, statusMsg, Rscore }) => {
                             
                                 <div className='flex flex-col max-w-[250px] p-1'>
                                     <span className='text-white'>評級標準:</span>
-                                    <div className='flex flex-col [&>div]:flex [&>div]:flex-row'>
+                                    <div className='flex flex-col [&>div]:flex [&>div]:flex-row [&>div>span]:text-stone-400'>
                                         <div>
                                             <span className="w-[30px]">S+</span>
                                             <span className="w-[60px]">: ≥ 85</span>
@@ -82,12 +79,10 @@ const Result = React.memo(({ ExpRate, Rrank, PieNums, statusMsg, Rscore }) => {
             );
         } else {
             return (
-                <div className={`w-[100%] mb-5 max-[500px]:w-[100%] my-1 ${(statusMsg !== undefined) ? '' : 'hidden'}`}>
-                    <div><span className='text-white'>{statusMsg}</span></div>
-                </div>
+                <></>
             );
         }
-    }, [ExpRate, Rrank, PieNums, statusMsg, Rscore, bgColor]);
+    }, [ExpRate, Rrank, PieNums, Rscore, bgColor]);
 
     return renderContent;
 });
@@ -98,13 +93,13 @@ const Pie=React.memo(({PieNums})=>{;
     if(PieNums!==undefined){
         const pieParams = {
             height: 200,
-            margin:{ top: 10, right: 0, bottom: 0, left: -100 },
+            margin:{ top: 10, right: 0, bottom: 0, left: -20 },
             slotProps: { legend: { hidden: true } },
         };
 
         return(
            <div className='w-[100%] flex flex-row flex-wrap'>
-                <div className='min-w-[300px]'>
+                <div className='min-w-[250px]'>
                     <PieChart  
                     series={[
                         {

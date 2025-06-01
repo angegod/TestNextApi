@@ -1,5 +1,4 @@
 @tailwind utilities;
-
 .moveAnimate svg{
     position: relative;
     animation: move 1s ;

@@ -1,8 +1,9 @@
 import React, {  useContext } from 'react';
 import AffixName from '../data/AffixName';
+import SiteContext from '../context/SiteContext';
 
-const StandDetails=React.memo(({context})=>{
-    const {standDetails} = useContext(context);
+const StandDetails=React.memo(()=>{
+    const {standDetails} = useContext(SiteContext);
 
     if(standDetails!==undefined){
         const list=standDetails.map((s)=>{
@@ -40,8 +41,8 @@ const StandDetails=React.memo(({context})=>{
 
 
 //顯示你所輸入的標準
-const ShowStand=React.memo(({context})=>{
-    const {selfStand,setSelfStand,setStatusMsg,isChangeAble} = useContext(context);
+const ShowStand=React.memo(()=>{
+    const {selfStand,setSelfStand,setStatusMsg,isChangeAble} = useContext(SiteContext);
     if(selfStand !== null){
         const list=selfStand.map((s,i)=>{
         

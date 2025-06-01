@@ -3,11 +3,12 @@ import React, { useContext } from 'react';
 import AffixName from '../data/AffixName';
 import { Tooltip } from 'react-tooltip';
 import { useRouter } from 'next/navigation';
+import SiteContext from '../context/SiteContext';
 
 
 //顯示儀器分數區間
-const RelicData=React.memo(({context,mode,button})=>{
-    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(context)
+const RelicData=React.memo(({mode,button})=>{
+    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(SiteContext);
     const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Rope 連結繩','Ball 位面球'];
     const router = useRouter();
     
@@ -22,7 +23,6 @@ const RelicData=React.memo(({context,mode,button})=>{
         }
         console.log(sendData);
         localStorage.setItem('EnchantData',JSON.stringify(sendData));
-        console.log(localStorage.getItem('EnchantData'));
         router.push('./enchant');
     }
 
@@ -165,8 +165,8 @@ const RelicData=React.memo(({context,mode,button})=>{
     }
 });
 
-const RelicData_simuldate=React.memo(({context,mode,button})=>{
-    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(context);
+const RelicData_simuldate=React.memo(({mode,button})=>{
+    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(SiteContext);
     const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Ball 位面球','Rope 連結繩'];
     const router = useRouter();
     //導航至模擬強化頁面

@@ -1,93 +1,84 @@
 @import "tailwindcss";
 
-.processBtn{
-    color: theme('colors.white');
-    border-color: theme('colors.white');
-    border-radius: theme('borderRadius.md');
-    padding-left: 2px;
-    padding-right: 2px;
-    border-width: 2px;
-}
-.processBtn:hover{
-    color: theme('colors.yellow.500');
-    border-color: theme('colors.yellow.500');
+.processBtn {
+  @apply text-white border-white border-2 rounded-md px-1;
 }
 
-.deleteBtn{
-    color: theme('colors.red.600');
-    border-color: theme('colors.red.600');
-    border-radius: theme('borderRadius.md');
-    border-width: 2px;
+.processBtn:hover {
+  color: #f59e0b;
+  border-color: #f59e0b;
 }
 
-.deleteBtn:hover{
-    color: theme('colors.red.500');
-    border-color: theme('colors.red.500');
-    border-radius: theme('borderRadius.md');
+.deleteBtn {
+  color: #dc2626;
+  border-color: #dc2626;
+  border-radius: 0.375rem;
+  border-width: 2px;
 }
 
-/*隱藏滾軸*/
-
-.hiddenScrollBar{
-    scrollbar-width: none;
+.deleteBtn:hover {
+  color: #ef4444;
+  border-color: #ef4444;
+  border-radius: 0.375rem;
 }
 
-select:disabled,input:disabled{
-    background-color:gray;
-    color: white;
+.hiddenScrollBar {
+  scrollbar-width: none;
 }
 
-button:disabled{
-    opacity: 0.5;
+select:disabled,
+input:disabled {
+  background-color: gray;
+  color: white;
 }
 
-.processBtn:disabled:hover{
-    color: white;
-    border-color: inherit;
+button:disabled {
+  opacity: 0.5;
 }
 
-select.graySelect{
-    background-color: inherit;
-    outline: none;
-    border-bottom: 1px white solid;
-    color: white;
+.processBtn:disabled:hover {
+  color: white;
+  border-color: inherit;
 }
 
-select.graySelect option{
-    background-color: rgb(36, 36, 36);
-    color: white;
+select.graySelect {
+  background-color: inherit;
+  outline: none;
+  border-bottom: 1px solid white;
+  color: white;
 }
 
-/*隱藏input number旁邊的調整按鈕*/
+select.graySelect option {
+  background-color: rgb(36, 36, 36);
+  color: white;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/*bg-inherit text-white border-b border-b-white outline-none*/
-
-/*繼承背景顏色的input*/
-.bgInput{
-    background-color: inherit;
-    color: theme('colors.white');
-    border-bottom-color: theme('colors.white');
-    border-bottom-width: 1px;
-    outline: none;
+.bgInput {
+  background-color: inherit;
+  color: white;
+  border-bottom-color: white;
+  border-bottom-width: 1px;
+  outline: none;
 }
 
-.css-rbklcn-MuiResponsiveChart-container svg{
-    width: 200px;
-    height: 200px;
+.css-rbklcn-MuiResponsiveChart-container svg {
+  width: 200px;
+  height: 200px;
 }
 
-.hintIcon{
-    width: 20px;
-    height: 20px;
-    background-color: rgb(36, 35, 35);
-    color: white;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.hintIcon {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(36, 35, 35);
+  color: white;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
