@@ -12,7 +12,7 @@ export default function Layout({ children }) {
     const pathname =usePathname();
 
     const MainContent = ()=>{
-        if(pathname === '/' || pathname === '/StarRailApi/'){
+        if(pathname === '/' || pathname === '/TestNextApi/'){
             return(<MainMenu/>)
         }else{
             return(<>

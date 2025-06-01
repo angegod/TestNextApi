@@ -143,7 +143,7 @@ onmessage = function (event) {
         //如果區間數量為0 則不予顯示
         returnData=returnData.filter((r)=>r.value>0);*/
         this.postMessage({
-            expRate:expRate,//期望值
+            expRate:(!expRate)?0:expRate,//期望值
             relicscore:score,//遺器分數
             relicrank:relicrank,//遺器區間
             returnData:returnData//區間機率        

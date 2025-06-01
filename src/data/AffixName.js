@@ -79,7 +79,7 @@ let AffixName=[{
     fieldName:'HealRatioBase',
     icon:'IconHealRatio',
     type:'heal_rate',
-    name:'治療加成',
+    name:'治療量加成',
     percent:true
 },{
     fieldName:'StatusProbabilityBase',
