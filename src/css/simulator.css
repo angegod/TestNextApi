@@ -26,12 +26,6 @@
   scrollbar-width: none;
 }
 
-/*select:disabled,
-input:disabled {
-  background-color: gray;
-  color: white;
-}*/
-
 button:disabled {
   opacity: 0.5;
 }
