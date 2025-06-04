@@ -26,11 +26,11 @@
   scrollbar-width: none;
 }
 
-select:disabled,
+/*select:disabled,
 input:disabled {
   background-color: gray;
   color: white;
-}
+}*/
 
 button:disabled {
   opacity: 0.5;
@@ -91,3 +91,4 @@ input[type="number"]::-webkit-outer-spin-button {
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome、Safari、Edge（新） */
 }
+

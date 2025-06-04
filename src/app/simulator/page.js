@@ -496,7 +496,7 @@ function Simulator(){
                             </div>
                         </div>
                         <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
-                            <div className='text-right w-[200px] max-[600px]:max-w-[150px] max-[400px]:text-left'>
+                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
                                 <span className='text-white'>Params 參數:</span>
                             </div>
                             <ShowStand />

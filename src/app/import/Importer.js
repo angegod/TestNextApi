@@ -12,7 +12,7 @@ import PastPreviewList from '@/components/PastPreviewList';
 import Result from '@/components/Result';
 import { StandDetails, ShowStand } from '@/components/StandDetails';
 import { RelicData } from '@/components/RelicData';
-import { StandardSelect,   CharSelect ,RelicSelect,StandardSelect2 } from '@/components/Select';
+import { StandardSelect,   CharSelect ,RelicSelect } from '@/components/Select';
 
 import SiteContext from '@/context/SiteContext';
 import { useStatusToast } from '@/context/StatusMsg';
@@ -576,7 +576,7 @@ function Importer(){
                                 onChange={(e)=>userID.current=e.target.value}
                                 disabled={!isChangeAble}/>
                     </div>
-                    <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-left'>
+                    <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-center'>
                         <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
                             <span className='text-white whitespace-nowrap'>Characters 腳色:</span>
                         </div>                       
@@ -592,7 +592,7 @@ function Importer(){
                             <span className='text-white whitespace-nowrap'>Affix 有效詞條:</span>
                         </div>
                         <div className='flex flex-row items-center'>
-                            <StandardSelect2 />
+                            <StandardSelect />
                         </div>
                     </div>
                     <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`}>

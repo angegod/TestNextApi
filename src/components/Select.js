@@ -131,7 +131,7 @@ const PartSelect=React.memo(()=>{
 });
 
 //自訂義有效詞條種類
-const StandardSelect=React.memo(()=>{
+const StandardSelect2=React.memo(()=>{
     const [selectAffix,setAffix]=useState(undefined);
     const {partsIndex,selfStand,setSelfStand,isChangeAble}=useContext(SiteContext);
     
@@ -197,7 +197,7 @@ const StandardSelect=React.memo(()=>{
 
 });
 
-const StandardSelect2=React.memo(()=>{
+const StandardSelect=React.memo(()=>{
     const {partsIndex,selfStand,setSelfStand,isChangeAble}=useContext(SiteContext);
     const [expand,setExpand]=useState(false);
 
@@ -262,26 +262,38 @@ const StandardSelect2=React.memo(()=>{
                 <div className='my-0.5 mx-1 hover:bg-stone-500 hover:text-white cursor-pointer flex flex-row items-center'
                     onClick={()=>addAffix(m)}
                     key={"options"+i}>
-                    <div className="w-5">
-                        <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/check.svg`} alt="check"
-                            className={exists ? 'opacity-100' : 'opacity-0'}/>
+                    <div className='mr-1 flex items-center'>
+                        <input type='checkbox' checked={exists} className='border-[0px] w-4 h-4' onChange={(event)=>console.log(event.target.vaue)}/>
                     </div>
                     <div>
-                        <span>{m}</span>
+                        <span className='text-white'>{m}</span>
                     </div>
                 </div>
             )
         });
 
+        // <div className="w-5">
+        //       <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/check.svg`} alt="check"
+        //                     className={exists ? 'opacity-100' : 'opacity-0'}/>
+        //            </div>
+
         return(
                 <div className='flex flex-col' ref={selectContainer}>
                     <div className='flex flex-row flex-wrap items-baseline'>
-                        <div className='w-[200px]'>
-                            <div className='relative border-b-2 border-stone-400' onClick={()=>setExpand(!expand)}>
-                                <span className='ml-1'>請選擇</span>
+                        <div className='w-[150px] min-w-fit'>
+                            <div className='relative border-b-2 border-stone-400 flex flex-row justify-between' onClick={()=>setExpand(!expand)}>
+                                <div>
+                                    <span className='ml-1 text-white'>請選擇</span>
+                                </div>
+                                <div>
+                                    <img
+                                        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/arrow_drop.svg`}
+                                        className={`transition-transform duration-300 ${expand ? 'rotate-180' : 'rotate-0'}`}
+                                        alt="arrow"/>
+                                </div>
                             </div>
                             {expand&&(
-                                <div className="absolute overflow-y-scroll bg-stone-700 w-[200px] h-[150px] border-white border-1 hide-scrollbar">
+                                <div className="absolute overflow-y-scroll bg-stone-700 w-fit h-[150px] border-[1px] hide-scrollbar">
                                     {optionsList}
                                 </div>
                             )}
