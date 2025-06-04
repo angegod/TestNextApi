@@ -91,7 +91,10 @@ const RelicData=React.memo(({mode,button})=>{
                         </div>
                         <span className={`${(isBold)?'text-yellow-500 font-bold':'text-white'} text-left flex` }>{s.name}</span>
                     </div>
-                    <span className='flex w-[70px]'>:<span className='ml-2 text-white '>{s.display}</span></span>
+                    <div className='flex w-[70px]'>
+                        <span className='mr-1'>:</span>
+                        <span className='text-right text-white '>{s.display}</span>
+                    </div>
                 </div>
                 
             )

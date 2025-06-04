@@ -47,12 +47,12 @@ function Menu({children}) {
 
 function MainMenu(){
     return(
-        <div className='w-[100%] h-[80vh] top-[5vh] relative'>
-            <div className='w-4/5 flex flex-col mx-auto'>
-                <div className='text-center h-[15vh] flex flex-col'>
-                    <div className='flex flex-col'>
+        <div className='w-[100%] h-[80vh] relative max-[900vh]:h-[100vh]'>
+            <div className='w-4/5 flex flex-col mx-auto max-[900px]:w-[90%]'>
+                <div className='text-center h-fit flex flex-col'>
+                    <div className='flex flex-col mt-5'>
                         <span className='font-bold text-2xl text-gray-200'>遺器重洗模擬器 </span>
-                        <span className='font-bold text-xl text-gray-200'>Relic Simulator</span>
+                        <span className='font-bold text-xl text-gray-300'>Relic Simulator</span>
                     </div>
                     <div className='mt-3'>
                         <span>能夠根據每件遺器的初始屬性，完整模擬及統計所有可能的強化組合，讓你預先了解該遺器潛力!</span>
@@ -60,8 +60,8 @@ function MainMenu(){
                 </div>
                 <div className='flex flex-row justify-evenly mx-auto w-[100%] mt-[5vh]'>
                     {list.map((m, i) => (
-                        <div key={'menu' + i} className='w-2/5 flex flex-col'>
-                            <div className='w-1/2 min-w-[30vw] mb-5 text-center h-[50px] bg-gray-700 rounded-sm mx-auto flex flex-col justify-center arrow-down-box relative'>
+                        <div key={'menu' + i} className='w-2/5 flex flex-col max-[900px]:w-[45%]'>
+                            <div className='subMenu arrow-down-box'>
                                 <span className='font-bold'>{m.description}</span>
                             </div>
                             <Link href={m.link} className='text-center'>

@@ -12,7 +12,7 @@ import PastPreviewList from '@/components/PastPreviewList';
 import Result from '@/components/Result';
 import { StandDetails, ShowStand } from '@/components/StandDetails';
 import { RelicData } from '@/components/RelicData';
-import { StandardSelect,   CharSelect ,RelicSelect } from '@/components/Select';
+import { StandardSelect,   CharSelect ,RelicSelect,StandardSelect2 } from '@/components/Select';
 
 import SiteContext from '@/context/SiteContext';
 import { useStatusToast } from '@/context/StatusMsg';
@@ -292,6 +292,7 @@ function Importer(){
        
     }
 
+    //刪除紀錄
     function clearData(){
         setExpRate(undefined);
         setRank({color:undefined,rank:undefined});
@@ -515,7 +516,7 @@ function Importer(){
         let oldHistory=historyData;
         
         dispatchHistory({ type: "ADD", payload: data })
-        updateStatus('已儲存','error');
+        updateStatus('已儲存','success');
         setIsSaveAble(false);
         oldHistory.push(data);
         
@@ -575,7 +576,7 @@ function Importer(){
                                 onChange={(e)=>userID.current=e.target.value}
                                 disabled={!isChangeAble}/>
                     </div>
-                    <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-center'>
+                    <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-left'>
                         <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
                             <span className='text-white whitespace-nowrap'>Characters 腳色:</span>
                         </div>                       
@@ -591,10 +592,7 @@ function Importer(){
                             <span className='text-white whitespace-nowrap'>Affix 有效詞條:</span>
                         </div>
                         <div className='flex flex-row items-center'>
-                            <StandardSelect />
-                            <div className='hintIcon ml-1 overflow-visible' data-tooltip-id="StandardHint">
-                                <span className='text-white'>?</span>
-                            </div>
+                            <StandardSelect2 />
                         </div>
                     </div>
                     <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`}>
@@ -609,7 +607,7 @@ function Importer(){
                     </div>
                     
                 </div>
-                <div className={`w-3/5 ${(historyData.length===0)?'hidden':''} flex-wrap max-[1250px]:w-[100%]`}>
+                <div className={`w-3/5 ${(historyData.length===0)?'hidden':''} flex-wrap max-[1250px]:w-[100%] max-[1250px]:mb-5`}>
                     <div className='flex flex-row items-baseline'>
                         <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
                         <div className='hintIcon ml-2 overflow-visible'
@@ -649,15 +647,6 @@ function Importer(){
                         <div className='flex flex-col'>
                             <span className='text-white'>選擇指定腳色，可以使用中文或英文關鍵字</span>
                             <span className='text-white'>例如:Jingliu&rarr;鏡流</span>
-                        </div>
-                    }/>
-            <Tooltip id="StandardHint" 
-                    place="top-start"
-                    render={()=>
-                        <div className='flex flex-col'>
-                            <span className='text-white'>根據個人需求</span>
-                            <span className='text-yellow-400'>選擇不重複的詞條種類(包含主詞條)</span>
-                            <span className='!text-red-500'>"有效詞條"選擇最多保有6個。</span>
                         </div>
                     }/>
             <Tooltip id="HistoryHint"  

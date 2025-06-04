@@ -82,3 +82,12 @@ input[type="number"]::-webkit-outer-spin-button {
   justify-content: center;
   align-items: center;
 }
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE 和 Edge（舊） */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome、Safari、Edge（新） */
+}

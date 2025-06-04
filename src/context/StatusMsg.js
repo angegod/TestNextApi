@@ -75,12 +75,7 @@ export const StatusToastProvider = ({ children }) => {
         {children}
         <div
             ref={statusBar}
-            className={`
-            fixed w-full flex justify-center top-[50px] z-[200] opacity-80
-            ${statusState === "idle" ? "hidden" : ""}
-            ${statusState === "enter" ? "toast-enter" : ""}
-            ${statusState === "exit" ? "toast-exit" : ""}
-            `}>
+            className={`fixed w-full flex justify-center top-[50px] z-[200] opacity-80 ${statusState === "idle" ? "hidden" : ""} ${statusState === "enter" ? "toast-enter" : ""} ${statusState === "exit" ? "toast-exit" : ""}`}>
             <div className={`w-[100px] ${statusBg} text-white px-3 py-3 rounded shadow-lg whitespace-pre-line text-center min-w-[250px]`}>
                 <span className="font-bold">{status}</span>
             </div>

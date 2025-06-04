@@ -8,7 +8,7 @@ const Result = React.memo(({ ExpRate, Rrank, PieNums, Rscore }) => {
     const renderContent = useMemo(() => {
         if (ExpRate !== undefined && Rrank !== undefined && PieNums !== undefined && Rscore !== undefined) {
             return (
-                <div className={`w-[100%] min-w-[400px] mb-5 my-1 ${(ExpRate !== undefined) ? '' : 'hidden'} max-[500px]:w-[330px] max-[400px]:w-[95%] max-[400px]:min-w-0`}>
+                <div className={`w-[100%] min-w-[400px] mb-5 my-1 ${(ExpRate !== undefined) ? '' : 'hidden'} max-[500px]:w-[330px] max-[400px]:w-[95%] max-[600px]:min-w-0 max-[600px]:w-[100vw]`}>
                     <div className='flex flex-col'>
                         <div className={`${(ExpRate !== undefined) ? '' : 'hidden'} mt-2 flex flex-row items-center`}>     
                             <div className='text-white flex flex-row'>
