@@ -263,7 +263,10 @@ const StandardSelect=React.memo(()=>{
                     onClick={()=>addAffix(m)}
                     key={"options"+i}>
                     <div className='mr-1 flex items-center'>
-                        <input type='checkbox' checked={exists} className='border-[0px] w-4 h-4' onChange={(event)=>console.log(event.target.vaue)}/>
+                        <input  type='checkbox' checked={exists} 
+                                className='border-[0px] w-4 h-4 accent-[dimgrey]' 
+                                onChange={(event)=>console.log(event.target.vaue)}
+                                disabled={!exists&&selfStand.length===6}/>
                     </div>
                     <div>
                         <span className='text-white text-sm'>{m}</span>
