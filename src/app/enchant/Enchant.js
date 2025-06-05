@@ -45,6 +45,8 @@ const Enchant=React.memo(()=>{
         }
     },[])
 
+    
+
 
     useEffect(()=>{
         //回到畫面最上方

@@ -102,6 +102,8 @@ function Simulator(){
             localStorage.setItem('HistoryData',JSON.stringify(history));
             historyData.current=history;
             updateStatus('先前紀錄已匯入!!','success');
+        }else{
+            updateStatus('尚未有任何操作紀錄!!','default');
         }
     }
 
@@ -490,9 +492,6 @@ function Simulator(){
                             </div>
                             <div className='flex flex-row items-center'>
                                 <StandardSelect />
-                                <div className='hintIcon ml-1 overflow-visible' data-tooltip-id="StandardHint">
-                                    <span className='text-white'>?</span>
-                                </div>
                             </div>
                         </div>
                         <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
@@ -512,7 +511,7 @@ function Simulator(){
                         </div>
                     </div>
                 </div>
-                <div className={`w-1/2 max-[1200px]:w-[100%]  my-4 ${(!historyData.current||historyData.current.length===0)?'hidden':''}`}
+                <div className={`w-1/2 max-[1200px]:w-[100%]  my-4 `}
                     id="historyData" >
                     <div className='flex flex-row items-center'>
                         <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
@@ -573,15 +572,6 @@ function Simulator(){
                     place="right-start" 
                     render={()=>
                         <SubAffixHint />
-                    }/>
-            <Tooltip id="StandardHint" 
-                    place="right-start"
-                    render={()=>
-                        <div className='flex flex-col max-w-[230px]'>
-                            <span className='text-white'>根據個人需求</span>
-                            <span className='text-yellow-400'>選擇不重複的詞條種類(包含主詞條)</span>
-                            <span className='!text-red-500'>"有效詞條"選擇最多保有6個。</span>
-                        </div>
                     }/>
             <Tooltip id="HistoryHint"  
                 place="top-center"
@@ -644,7 +634,8 @@ function Simulator(){
 //歷史紀錄清單
 const HistoryList=()=>{
     const {historyData} = useContext(SiteContext)
-    if(historyData){
+
+    if(historyData&&historyData.length>0){
         return(
             historyData.map((item,i)=>
                 <PastPreview index={i} 
@@ -654,7 +645,12 @@ const HistoryList=()=>{
             )
         )
     }else{
-        return <></>
+        return (
+            <div className='flex flex-col'>
+                <span className='text-stone-300'>這裡沒有任何操作過的紀錄!!</span>
+                <span className='text-stone-300'>計算完畢後可以透過"儲存紀錄"按鈕來保留查詢結果。</span>
+            </div>
+        )
     }
 }
 

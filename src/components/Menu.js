@@ -72,7 +72,7 @@ function MainMenu(){
                                             alt="Logo"
                                             width={200}
                                             height={200}
-                                        className='mx-auto'/>
+                                            className='mx-auto'/>
                                         <span className='text-xl text-gray-400 font-bold'>{m.mode}</span>
                                         <span className='text-lg text-gray-400 font-bold'>{m.engname}</span>
                                     </div> 

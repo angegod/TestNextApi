@@ -16,7 +16,11 @@ const PastPreviewList=React.memo(()=>{
         
         return <>{renderList}</>;
     }else{
-        return <></>
+        return (
+            <div>
+                <span>這裡沒有任何您操作過的紀錄。</span>
+            </div>
+        )
     }
 });
 

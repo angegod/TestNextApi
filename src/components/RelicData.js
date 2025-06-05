@@ -182,9 +182,9 @@ const RelicData_simuldate=React.memo(({mode,button})=>{
             mode:mode
         }
 
-        localStorage.setItem('EnchantData',sendData);
+        localStorage.setItem('EnchantData',JSON.stringify(sendData));
 
-        router.push('../enchant');
+        router.push('./enchant');
     }
 
     if(relic!==undefined){

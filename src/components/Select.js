@@ -266,7 +266,7 @@ const StandardSelect=React.memo(()=>{
                         <input type='checkbox' checked={exists} className='border-[0px] w-4 h-4' onChange={(event)=>console.log(event.target.vaue)}/>
                     </div>
                     <div>
-                        <span className='text-white'>{m}</span>
+                        <span className='text-white text-sm'>{m}</span>
                     </div>
                 </div>
             )
@@ -281,7 +281,7 @@ const StandardSelect=React.memo(()=>{
                 <div className='flex flex-col' ref={selectContainer}>
                     <div className='flex flex-row flex-wrap items-baseline'>
                         <div className='w-[150px] min-w-fit'>
-                            <div className='relative border-b-2 border-stone-400 flex flex-row justify-between' onClick={()=>setExpand(!expand)}>
+                            <div className='relative border-b-2 border-white flex flex-row justify-between' onClick={()=>setExpand(!expand)}>
                                 <div>
                                     <span className='ml-1 text-white'>請選擇</span>
                                 </div>
@@ -293,7 +293,7 @@ const StandardSelect=React.memo(()=>{
                                 </div>
                             </div>
                             {expand&&(
-                                <div className="absolute overflow-y-scroll bg-stone-700 w-fit h-[150px] border-[1px] hide-scrollbar">
+                                <div className="absolute overflow-y-scroll bg-stone-700 w-[inherit] h-[150px] border-[1px] hide-scrollbar border-stone-700 p-1">
                                     {optionsList}
                                 </div>
                             )}

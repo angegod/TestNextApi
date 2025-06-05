@@ -565,7 +565,7 @@ function Importer(){
                     <span className='text-white'>?</span>
                 </div>
             </div>
-            <div className='flex flex-row flex-wrap '>
+            <div className='flex flex-row flex-wrap'>
                 <div className='flex flex-col w-2/5 max-[1250px]:w-[100%] min-w-[400px]'>
                     <div className='flex flex-row [&>*]:mr-2 my-3 items-baseline max-[400px]:!flex-col'>
                         <div className='text-right w-[200px] max-[400px]:text-left max-[600px]:w-[120px]'><span className='text-white'>玩家UID :</span></div>
@@ -601,7 +601,7 @@ function Importer(){
                         </div>
                         <ShowStand />
                     </div>
-                    <div className='my-3 flex flex-row [&>*]:mr-2 justify-end max-w-[400px] max-[400px]:justify-start'>
+                    <div className='my-3 flex flex-row [&>*]:mr-2 justify-end max-w-[400px] max-[900px]:justify-center'>
                         <button className='processBtn' onClick={()=>getRecord()}  disabled={!isChangeAble}>開始匹配</button>
                         <button className='processBtn' onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
                     </div>

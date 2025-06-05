@@ -1,6 +1,7 @@
 import React, {  useContext } from 'react';
 import AffixName from '../data/AffixName';
 import SiteContext from '../context/SiteContext';
+import Image from 'next/image';
 
 const StandDetails=React.memo(()=>{
     const {standDetails} = useContext(SiteContext);
@@ -64,10 +65,20 @@ const ShowStand=React.memo(()=>{
                         onChange={(event)=>changeVal(i,event.target.value)}/>
                     
                 </div>
-                <button onClick={()=>removeAffix(i)} className='deleteBtn px-1 whitespace-nowrap' disabled={!isChangeAble}>移除</button>
+                <div className='flex items-center'>
+                    <Image 
+                        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/delete.svg`}
+                        alt="Logo"
+                        width={20}
+                        height={20}
+                        className='mx-auto cursor-pointer hover:opacity-80'
+                        onClick={()=>removeAffix(i)}/>
+                </div>
+                
             </div>)
         })
-    
+        
+        //<button onClick={()=>removeAffix(i)} className='deleteBtn px-1 whitespace-nowrap' disabled={!isChangeAble}>移除</button>
         function removeAffix(index){
             setSelfStand((arr)=>arr.filter((item,i)=>i!==index));
         }

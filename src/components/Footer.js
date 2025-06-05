@@ -38,7 +38,7 @@ function Footer(){
             <div className='mx-auto flex flex-row justify-center [&>div]:mx-3 mt-3 [&>div]:first:mx-0 max-[600px]:flex-col max-[600px]:[&>div]:mx-0 max-[600px]:[&>div]:mb-1'>
                 {list}
             </div>
-            <div className='mx-auto text-stone-500 flex flex-col [&>span]:text-left [&>span]:font-bold [&>span]:mt-1 py-2 max-[600px]:[&>span]:!text-sm'>
+            <div className='mx-auto text-stone-500 flex flex-col [&>span]:text-left [&>span]:text-sm [&>span]:font-bold [&>span]:mt-1 py-2 max-[600px]:[&>span]:!text-sm'>
                 <span>&copy; 2025 <a href="https://home.gamer.com.tw/profile/index.php?&owner=ange0733" className="underline">Ange</a></span>
                 <span>Website created by Ange. All rights reserved.</span>
                 <span>Data latest Updated at 2025/06/02</span>
