@@ -36,7 +36,7 @@ body{
     content: "";
     position: absolute;
     inset: 0; /* 等於 top/right/bottom/left: 0 */
-    background-image: url('/image/background.jpg');
+    background-image: url('/TestNextApi/image/background.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
