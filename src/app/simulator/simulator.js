@@ -543,10 +543,6 @@ function Simulator(){
                                 PieNums={PieNums}/>
                     </div>
                 </div>
-                
-            </div>
-            <div className={`flex flex-row flex-wrap ${(charID)?'hidden':''}`}>
-                <Intro />
             </div>
         </div>
         <div>

@@ -25,13 +25,21 @@ body{
     @apply max-[600px]:w-[150px] max-[600px]:h-[10vh] max-[600px]:px-1
 }
 
-/*.subMenu:hover{
-    border-bottom: 1px;
-    animation: bottomBorderExpand 0.2s linear delay;
+
+.MainBackGround {
+    position: relative;
+    z-index: 0;
+    /* 確保內容正常呈現 */
 }
 
-@keyframes bottomBorderExpand {
-    50%{
-        border-bottom: ;
-    }
-}*/
+.MainBackGround::before {
+    content: "";
+    position: absolute;
+    inset: 0; /* 等於 top/right/bottom/left: 0 */
+    background-image: url('/image/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.3; /* 調整這裡的數值讓圖片變淡 */
+    z-index: -1; /* 放在內容後面 */
+}

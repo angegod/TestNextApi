@@ -1,7 +1,7 @@
 import React, { Component,useCallback,useContext,useMemo } from 'react';
 import {PastPreview} from './PastPreview';
 import SiteContext from '../context/SiteContext';
-
+import Link from 'next/link';
 const PastPreviewList=React.memo(()=>{
     const {historyData}=useContext(SiteContext);
 
@@ -17,8 +17,10 @@ const PastPreviewList=React.memo(()=>{
         return <>{renderList}</>;
     }else{
         return (
-            <div>
-                <span>這裡沒有任何您操作過的紀錄。</span>
+            <div className='flex flex-col'>
+                <span className='text-stone-300'>這裡沒有任何操作過的紀錄!!</span>
+                <span className='text-stone-300'>如果是初次使用的話不妨看看下面簡單的Q&A，能夠更加了解系統</span>
+                <button>點我了解</button>
             </div>
         )
     }
@@ -42,8 +44,13 @@ const PastPreviewList_simulator=React.memo(()=>{
         return (
                 <div className='flex flex-col'>
                     <span className='text-stone-300'>這裡沒有任何操作過的紀錄!!</span>
-                    <span className='text-stone-300'>在開始使用前不妨看看下面簡單的Q&A</span>
-                </div>
+                    <span className='text-stone-300'>如果是初次使用的話不妨看看下面簡單的Q&A，能夠更加了解系統</span>
+                    <div className='justify-start py-1'>
+                        <Link href={'../intro'} className='text-center'>
+                             <button className='processBtn'>&rarr;點我了解</button>
+                        </Link>
+                    </div>
+                </div> 
         )
     }
 });

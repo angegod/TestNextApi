@@ -47,7 +47,7 @@ function Menu({children}) {
 
 function MainMenu(){
     return(
-        <div className='w-[100%] h-[80vh] relative max-[900vh]:h-[100vh]'>
+        <div className='w-[100%] h-[80vh] relative max-[900vh]:h-[100vh] MainBackGround'>
             <div className='w-4/5 flex flex-col mx-auto max-[900px]:w-[90%]'>
                 <div className='text-center h-fit flex flex-col'>
                     <div className='flex flex-col mt-5'>

@@ -558,7 +558,7 @@ function Importer(){
     
     return(
     <SiteContext.Provider value={ImporterStatus}>
-        <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[90%]'>
+        <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[90%] intro p-1 rounded-md'>
             <div className='flex flex-row items-center'>
                 <h1 className='text-red-600 font-bold text-2xl'>遺器匯入</h1>
                 <div className='hintIcon ml-2 overflow-visible'
@@ -639,9 +639,6 @@ function Importer(){
                             Rrank={Rrank} 
                             PieNums={PieNums}/>
                 </div>
-            </div>
-            <div className={`flex flex-row flex-wrap w-[100%] ${(charID===undefined&&PieNums===undefined)?'':'hidden'}`}>
-                <Intro />
             </div>
         </div>
         <div>
