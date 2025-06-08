@@ -9,7 +9,7 @@ const PastPreview=React.memo(({index,data})=>{
     const hue = data.expRate * 120;
     const textColor =`hsl(${hue}, 100%, 50%)`;
     const BaseLink =  `https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/icon/character/${data.char.charID}.png`;
-    
+    console.log(data);
     return(
         <div className={`flex flex-row flex-wrap min-w-[100px] max-w-[300px] max-h-[120px] bg-slate-700 rounded-md p-2 m-2 max-[800px]:w-4/5 max-[400px]:w-[95%] max-[400px]:!flex-nowrap clip-both-corners`}>
             <div className='flex flex-col'>

@@ -1,5 +1,5 @@
 import React, { Component,useCallback,useContext,useMemo } from 'react';
-import {PastPreview} from './PastPreview';
+import {PastPreview, PastPreview_simulator} from './PastPreview';
 import SiteContext from '../context/SiteContext';
 import Link from 'next/link';
 const PastPreviewList=React.memo(()=>{
@@ -34,7 +34,8 @@ const PastPreviewList_simulator=React.memo(()=>{
     if(historyData&&historyData.length>0){
         return(
             historyData.map((item,i)=>
-                <PastPreview index={i} 
+                <PastPreview_simulator 
+                            index={i} 
                             data={item}    
                             context={SiteContext}
                             key={'historyData'+i}/>
