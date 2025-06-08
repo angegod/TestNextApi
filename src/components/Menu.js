@@ -55,14 +55,14 @@ function MainMenu(){
                         <span className='font-bold text-xl text-gray-300'>Relic Simulator</span>
                     </div>
                     <div className='mt-3'>
-                        <span>能夠根據每件遺器的初始屬性，完整模擬及統計所有可能的強化組合，讓你預先了解該遺器潛力!</span>
+                        <span>能夠根據每件遺器的初始屬性，完整模擬及統計所有可能的強化組合，讓你了解該遺器潛力!</span>
                     </div>
                 </div>
                 <div className='flex flex-row justify-evenly mx-auto w-[100%] mt-[5vh]'>
                     {list.map((m, i) => (
                         <div key={'menu' + i} className='w-2/5 flex flex-col max-[900px]:w-[45%]'>
                             <div className='subMenu arrow-down-box'>
-                                <span className='font-bold'>{m.description}</span>
+                                <span className='font-bold text-white italic'>{m.description}</span>
                             </div>
                             <Link href={m.link} className='text-center'>
                                 <div className='flex flex-col bg-gray-700 rounded-sm hover:bg-gray-600'>

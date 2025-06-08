@@ -1,0 +1,11 @@
+@import "tailwindcss";
+.intros{
+    background: linear-gradient(
+        189deg, 
+        rgba(0, 0, 0, .2) 0%, 
+        rgba(0, 0, 0, .04) 50%, 
+        rgba(187, 187, 187, 0.2) 100%
+    );
+
+    box-shadow: 0 20px 30px #00000080;
+}   

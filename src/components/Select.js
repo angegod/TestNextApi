@@ -275,11 +275,6 @@ const StandardSelect=React.memo(()=>{
             )
         });
 
-        // <div className="w-5">
-        //       <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/check.svg`} alt="check"
-        //                     className={exists ? 'opacity-100' : 'opacity-0'}/>
-        //            </div>
-
         return(
                 <div className='flex flex-col' ref={selectContainer}>
                     <div className='flex flex-row flex-wrap items-baseline'>
@@ -312,6 +307,7 @@ const StandardSelect=React.memo(()=>{
                                 <span className='text-white'>根據個人需求</span>
                                 <span className='text-yellow-400'>選擇不重複的詞條種類(包含主詞條)</span>
                                 <span className='!text-red-500'>"有效詞條"選擇最多保有6個。</span>
+                                <span className='text-red-500'>如果已選擇6項，則其餘選項將無法選取。</span>
                             </div>
                         }/>
                 </div>

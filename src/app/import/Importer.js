@@ -8,7 +8,7 @@ import axios from 'axios';
 import { Tooltip } from 'react-tooltip'
 import { usePathname } from 'next/navigation';
 
-import PastPreviewList from '@/components/PastPreviewList';
+import {PastPreviewList} from '@/components/PastPreviewList';
 import Result from '@/components/Result';
 import { StandDetails, ShowStand } from '@/components/StandDetails';
 import { RelicData } from '@/components/RelicData';
@@ -17,6 +17,7 @@ import { StandardSelect,   CharSelect ,RelicSelect } from '@/components/Select';
 import SiteContext from '@/context/SiteContext';
 import { useStatusToast } from '@/context/StatusMsg';
 import HintImporter from '@/components/Hint/HintImporter';
+import Intro from '@/components/Intro';
 
 
 function Importer(){
@@ -621,14 +622,14 @@ function Importer(){
                 </div>
             </div>
             
-            <div className={`flex flex-row flex-wrap w-[100%] border-t-4 border-gray-600 ${(PieNums===undefined)?'hidden':''}`} >
+            <div className={`flex flex-row flex-wrap w-[100%] border-t-4 border-gray-600 ${(!PieNums)?'hidden':''}`} >
                 <div className={`w-[100%] ${(PieNums===undefined)?'hidden':''}`}>
                     <RelicSelect />
                 </div>
-                <div className={`mt-3 flex flex-row flex-wrap w-1/4  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`}>
+                <div className={`mt-3 flex flex-row flex-wrap w-1/4  max-[700px]:w-[50%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`}>
                     <RelicData  mode={'Importer'} button={true}/>
                 </div>
-                <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
+                <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                     <StandDetails />
                 </div>
                 <div className={`mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} 
@@ -638,6 +639,9 @@ function Importer(){
                             Rrank={Rrank} 
                             PieNums={PieNums}/>
                 </div>
+            </div>
+            <div className={`flex flex-row flex-wrap w-[100%] ${(charID===undefined&&PieNums===undefined)?'':'hidden'}`}>
+                <Intro />
             </div>
         </div>
         <div>

@@ -5,13 +5,15 @@ import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import '../../css/simulator.css';
-import AffixName from '../../data/AffixName';
+import AffixName from '@/data/AffixName';
 
-import Result from '../../components/Result';
-import { StandDetails ,ShowStand } from '../../components/StandDetails';
-import { RelicData_simuldate as RelicData} from '../../components/RelicData';
-import { PastPreview_simulator as PastPreview } from '../../components/PastPreview';
-import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '../../components/Select';
+import Result from '@/components/Result';
+import { StandDetails ,ShowStand } from '@/components/StandDetails';
+import { RelicData_simuldate as RelicData} from '@/components/RelicData';
+import { PastPreviewList_simulator } from '@/components/PastPreviewList';
+import { PastPreview_simulator as PastPreview } from '@/components/PastPreview';
+import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '@/components/Select';
+import Intro from '@/components/Intro';
 import SubAffixHint from '@/components/Hint/SubAffixHint';
 import HintSimulator from '@/components/Hint/HintSimulator';
 import { Tooltip } from 'react-tooltip';
@@ -521,12 +523,12 @@ function Simulator(){
                         </div>
                     </div>
                     <div className='flex flex-row flex-wrap h-max max-h-[600px] overflow-y-scroll hiddenScrollBar max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
-                        <HistoryList />
+                        <PastPreviewList_simulator />
                     </div>
                 </div>
             </div>
             <div className='flex flex-row mb-3 flex-wrap'>
-                <div className={`border-t-4 border-gray-600 w-[100%] flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
+                <div className={`border-t-4 border-gray-600 w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
                     <div className={`mt-3 flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <RelicData   mode={'Simulator'} button={true}/>
                     </div>
@@ -542,6 +544,9 @@ function Simulator(){
                     </div>
                 </div>
                 
+            </div>
+            <div className={`flex flex-row flex-wrap ${(charID)?'hidden':''}`}>
+                <Intro />
             </div>
         </div>
         <div>
@@ -631,28 +636,6 @@ function Simulator(){
     </SiteContext.Provider>)
 }
 
-//歷史紀錄清單
-const HistoryList=()=>{
-    const {historyData} = useContext(SiteContext)
-
-    if(historyData&&historyData.length>0){
-        return(
-            historyData.map((item,i)=>
-                <PastPreview index={i} 
-                            data={item}    
-                            context={SiteContext}
-                            key={'historyData'+i}/>
-            )
-        )
-    }else{
-        return (
-            <div className='flex flex-col'>
-                <span className='text-stone-300'>這裡沒有任何操作過的紀錄!!</span>
-                <span className='text-stone-300'>計算完畢後可以透過"儲存紀錄"按鈕來保留查詢結果。</span>
-            </div>
-        )
-    }
-}
 
 
 
