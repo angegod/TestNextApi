@@ -17,7 +17,7 @@ import { StandardSelect,   CharSelect ,RelicSelect } from '@/components/Select';
 import SiteContext from '@/context/SiteContext';
 import { useStatusToast } from '@/context/StatusMsg';
 import HintImporter from '@/components/Hint/HintImporter';
-import Intro from '@/components/Intro';
+import HintHistory from '@/components/Hint/HintHistory';
 
 
 function Importer(){
@@ -558,71 +558,75 @@ function Importer(){
     
     return(
     <SiteContext.Provider value={ImporterStatus}>
-        <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[90%] intro p-1 rounded-md'>
-            <div className='flex flex-row items-center'>
-                <h1 className='text-red-600 font-bold text-2xl'>遺器匯入</h1>
-                <div className='hintIcon ml-2 overflow-visible'
-                    data-tooltip-id="ImporterHint">
-                    <span className='text-white'>?</span>
-                </div>
-            </div>
-            <div className='flex flex-row flex-wrap'>
-                <div className='flex flex-col w-2/5 max-[1250px]:w-[100%] min-w-[400px]'>
-                    <div className='flex flex-row [&>*]:mr-2 my-3 items-baseline max-[400px]:!flex-col'>
-                        <div className='text-right w-[200px] max-[400px]:text-left max-[600px]:w-[120px]'><span className='text-white'>玩家UID :</span></div>
-                        <input type='text' placeholder='HSR UID' 
-                                className='h-[40px] max-w-[170px] pl-2 
-                                        bg-inherit text-white outline-none border-b border-white' 
-                                id="userId"
-                                onChange={(e)=>userID.current=e.target.value}
-                                disabled={!isChangeAble}/>
-                    </div>
-                    <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-center'>
-                        <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
-                            <span className='text-white whitespace-nowrap'>Characters 腳色:</span>
-                        </div>                       
-                        <div className='flex flex-row items-center'>
-                            <CharSelect  />
-                            <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
+        <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[95%] rounded-md '>
+            <div className='rounded-md'>
+                <div className='flex flex-row flex-wrap max-[600px]:w-[95%] '>
+                    <div className='flex flex-col w-2/5 bg-[rgba(0,0,0,0.5)] rounded-md  max-[1250px]:w-[100%]'>
+                        <div className='flex flex-row items-center ml-2 mt-2'>
+                            <h1 className='text-red-600 font-bold text-2xl'>遺器匯入</h1>
+                            <div className='hintIcon ml-2 overflow-visible' 
+                                data-tooltip-id="ImporterHint">
                                 <span className='text-white'>?</span>
                             </div>
                         </div>
-                    </div>
-                    <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col` } >
-                        <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
-                            <span className='text-white whitespace-nowrap'>Affix 有效詞條:</span>
+                        <div className='flex flex-col px-2 rounded-md'>
+                            <div className='flex flex-row [&>*]:mr-2 my-3 items-baseline max-[400px]:!flex-col'>
+                                <div className='text-right w-[200px] max-[400px]:text-left max-[600px]:w-[120px]'><span className='text-white'>玩家UID :</span></div>
+                                <input type='text' placeholder='HSR UID' 
+                                        className='h-[40px] max-w-[170px] pl-2 
+                                                bg-inherit text-white outline-none border-b border-white' 
+                                        id="userId"
+                                        onChange={(e)=>userID.current=e.target.value}
+                                        disabled={!isChangeAble}/>
+                            </div>
+                            <div className='flex flex-row [&>*]:mr-2 my-3 max-[400px]:!flex-col items-baseline'>
+                                <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
+                                    <span className='text-white whitespace-nowrap'>Characters 腳色:</span>
+                                </div>                       
+                                <div className='flex flex-row items-left'>
+                                    <CharSelect  />
+                                    <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
+                                        <span className='text-white'>?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col` } >
+                                <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
+                                    <span className='text-white whitespace-nowrap'>Affix 有效詞條:</span>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    <StandardSelect />
+                                </div>
+                            </div>
+                            <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`}>
+                                <div className='text-right w-[200px] max-[400px]:text-left max-[600px]:w-[120px]'>
+                                    <span className='text-white'>Params 參數:</span>
+                                </div>
+                                <ShowStand />
+                            </div>
+                            <div className='my-3 flex flex-row [&>*]:mr-2 justify-end max-w-[400px] max-[900px]:justify-center'>
+                                <button className='processBtn' onClick={()=>getRecord()}  disabled={!isChangeAble}>開始匹配</button>
+                                <button className='processBtn' onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
+                            </div>
+                            
                         </div>
-                        <div className='flex flex-row items-center'>
-                            <StandardSelect />
+                    </div>
+                    <div className={`w-[55%] ${(historyData.length===0)?'hidden':''} flex-wrap max-[1250px]:w-[100%] max-[1250px]:mb-5 ml-2 bg-[rgba(0,0,0,0.5)] rounded-md max-[1250px]:ml-0 max-[1250px]:mt-2`}>
+                        <div className='flex flex-row items-baseline px-2'>
+                            <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
+                            <div className='hintIcon ml-2 overflow-visible'
+                                data-tooltip-id="HistoryHint">
+                                <span className='text-white'>?</span>
+                            </div>
                         </div>
+                        <div className='h-[300px] overflow-y-scroll hiddenScrollBar flex flex-row flex-wrap max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
+                            <PastPreviewList  />
+                        </div> 
                     </div>
-                    <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`}>
-                        <div className='text-right w-[200px] max-[400px]:text-left max-[600px]:w-[120px]'>
-                            <span className='text-white'>Params 參數:</span>
-                        </div>
-                        <ShowStand />
-                    </div>
-                    <div className='my-3 flex flex-row [&>*]:mr-2 justify-end max-w-[400px] max-[900px]:justify-center'>
-                        <button className='processBtn' onClick={()=>getRecord()}  disabled={!isChangeAble}>開始匹配</button>
-                        <button className='processBtn' onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
-                    </div>
-                    
-                </div>
-                <div className={`w-3/5 ${(historyData.length===0)?'hidden':''} flex-wrap max-[1250px]:w-[100%] max-[1250px]:mb-5`}>
-                    <div className='flex flex-row items-baseline'>
-                        <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
-                        <div className='hintIcon ml-2 overflow-visible'
-                            data-tooltip-id="HistoryHint">
-                            <span className='text-white'>?</span>
-                        </div>
-                    </div>
-                    <div className='h-[300px] overflow-y-scroll hiddenScrollBar flex flex-row flex-wrap max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
-                        <PastPreviewList  />
-                    </div> 
                 </div>
             </div>
             
-            <div className={`flex flex-row flex-wrap w-[100%] border-t-4 border-gray-600 ${(!PieNums)?'hidden':''}`} >
+            <div className={`flex flex-row flex-wrap mt-2 w-[100%] ${(!PieNums)?'hidden':''} bg-[rgba(0,0,0,0.5)] px-2 mb-5 rounded-md`} >
                 <div className={`w-[100%] ${(PieNums===undefined)?'hidden':''}`}>
                     <RelicSelect />
                 </div>
@@ -632,8 +636,7 @@ function Importer(){
                 <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                     <StandDetails />
                 </div>
-                <div className={`mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} 
-                    id="resultDetails">
+                <div className={`mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} id="resultDetails">
                     <Result ExpRate={ExpRate} 
                             Rscore={Rscore} 
                             Rrank={Rrank} 
@@ -653,40 +656,7 @@ function Importer(){
             <Tooltip id="HistoryHint"  
                     place="top-center"
                     render={()=>
-                        <div className='flex flex-col max-w-[250px] p-1'>
-                            <div>
-                                <span className='text-white'>此區塊可以查看過往查詢紀錄，下面為個別功能相關簡述。</span>
-                            </div>
-                            <div className='mt-2 flex flex-col'>
-                                <span className='text-md font-bold text-white'>檢視</span>
-                                <span>可以查看曾經查詢出來的資訊、包括遺器、評分標準等</span>
-                            </div>
-                            <div className='mt-2 flex flex-col'>
-                                <div>
-                                    <span className='text-white font-bold'>更新</span>
-                                </div>
-                                <div>
-                                    <span>點選後會根據該紀錄原本的參數再查詢一次，並且將新結果更新至掉該筆紀錄中。</span>
-                                </div>
-                            </div>
-                            <div className='mt-2 flex flex-col'>
-                                <div>
-                                    <span className='text-md font-bold text-white'>刪除</span>
-                                </div>
-                                <div>
-                                    <span>刪除該筆紀錄</span>
-                                </div>
-                            </div>
-                            <div className='mt-2 flex flex-col'>
-                                <div>
-                                    <span className='text-md font-bold text-white'>注意事項</span>
-                                </div>
-                                <div className='flex flex-col'>
-                                    <span className='!text-red-500'>"過往紀錄"最多只保留6筆</span>
-                                    <span className='!text-yellow-500'>如果在已有6筆資料的情況再新增，則會從最舊的紀錄開始覆蓋掉</span>
-                                </div>
-                            </div>
-                        </div>
+                        <HintHistory />
                     }/>
             <Tooltip id="RelicSelectHint"  
                     place="top-start"

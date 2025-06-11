@@ -17,18 +17,31 @@ export default function Layout({ children }) {
         }else{
             return(<>
                 <Menu />
-                <div className='min-h-[100vh]'>
+                <div className='min-h-[100vh] '>
                     {children}
                 </div>
             </>)
         }
+    };
+
+    //判斷現在該使用哪種背景?
+    let backgroundClass = "";
+
+    if(pathname === "/"||pathname === "/TestNextApi/"){
+        backgroundClass = "MainBackGround"
+    }else {
+        backgroundClass = "SubBackGround"
+    }
+
+    if(process.env.NODE_ENV ==='production'){
+        backgroundClass += "-release";
     }
 
     return (
         <html lang="zh-Hant">
             <body>
                 <StatusToastProvider>
-                    <div>
+                    <div className={`${backgroundClass}`}>
                         <MainContent/>
                         <Footer />
                     </div>

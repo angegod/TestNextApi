@@ -35,6 +35,12 @@ button:disabled {
   border-color: inherit;
 }
 
+.linedHref{
+  cursor: pointer;
+  color:orange;
+  border-bottom: 1px solid orange;
+}
+
 select.graySelect {
   background-color: inherit;
   outline: none;

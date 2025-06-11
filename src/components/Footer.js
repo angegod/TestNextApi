@@ -34,7 +34,7 @@ function Footer(){
 
 
     return(
-        <div className='flex flex-row justify-center bg-[rgb(40,40,40)] min-h-[20vh] pt-1 text-left [&>div]:w-4/5 max-[600px]:min-h-[30vh] max-[600px]:!flex-col'>  
+        <div className='flex flex-row justify-center bg-[rgb(40,40,40)] min-h-[20vh] text-left [&>div]:w-4/5 max-[600px]:min-h-[30vh] max-[600px]:!flex-col'>  
             <div className='mx-auto flex flex-row justify-center [&>div]:mx-3 mt-3 [&>div]:first:mx-0 max-[600px]:flex-col max-[600px]:[&>div]:mx-0 max-[600px]:[&>div]:mb-1'>
                 {list}
             </div>

@@ -21,7 +21,7 @@ const list=[{
 
 function Menu({children}) {
     return (
-        <div className='my-3 sticky top-0 w-[100%] z-[100] pt-2 bg-[rgb(49,48,48)]'>
+        <div className='sticky top-0 w-[100%] z-[100] py-3 '>
             <div className='flex flex-row w-4/5 mx-auto max-[400px]:w-[90%]'>
               {list.map((m, i) => (
                   <div
@@ -47,7 +47,7 @@ function Menu({children}) {
 
 function MainMenu(){
     return(
-        <div className='w-[100%] h-[80vh] relative max-[900vh]:h-[100vh] MainBackGround'>
+        <div className={`w-[100%] h-[80vh] relative max-[900vh]:h-[100vh] `}>
             <div className='w-4/5 flex flex-col mx-auto max-[900px]:w-[90%]'>
                 <div className='text-center h-fit flex flex-col'>
                     <div className='flex flex-col mt-5'>

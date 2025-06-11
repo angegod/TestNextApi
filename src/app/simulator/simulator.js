@@ -5,6 +5,7 @@ import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import '../../css/simulator.css';
+import '@/css/intro.css';
 import AffixName from '@/data/AffixName';
 
 import Result from '@/components/Result';
@@ -13,7 +14,6 @@ import { RelicData_simuldate as RelicData} from '@/components/RelicData';
 import { PastPreviewList_simulator } from '@/components/PastPreviewList';
 import { PastPreview_simulator as PastPreview } from '@/components/PastPreview';
 import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '@/components/Select';
-import Intro from '@/components/Intro';
 import SubAffixHint from '@/components/Hint/SubAffixHint';
 import HintSimulator from '@/components/Hint/HintSimulator';
 import { Tooltip } from 'react-tooltip';
@@ -428,114 +428,116 @@ function Simulator(){
     
     return(
     <SiteContext.Provider value={SimulatorStatus}>
-        <div className='w-4/5 mx-auto max-[600px]:w-[90%]'>
-            <div className='flex flex-row items-center'>
-                <h1 className='text-red-600 font-bold text-2xl'>遺器重洗模擬器</h1>
-                <div className='hintIcon ml-2 overflow-visible'
-                    data-tooltip-id="SimulatorHint">
-                    <span className='text-white'>?</span>
+        <div className='w-4/5 mx-auto max-[600px]:w-[90%] flex flex-row flex-wrap'>
+            <div className='flex flex-col  bg-[rgba(0,0,0,0.5)] p-1 rounded-md'>
+                <div className='flex flex-row items-center'>
+                    <h1 className='text-red-600 font-bold text-2xl'>遺器重洗模擬器</h1>
+                    <div className='hintIcon ml-2 overflow-visible'
+                        data-tooltip-id="SimulatorHint">
+                        <span className='text-white'>?</span>
+                    </div>
+                </div>
+                <div className='flex flex-row flex-wrap'>
+                    <div className='flex flex-row flex-wrap w-1/2 max-[1200px]:w-[100%]'>
+                        <div className='flex flex-col mt-2'>
+                            <div className='flex flex-row [&>*]:mr-2 my-3 items-center max-[400px]:!flex-col max-[400px]:items-start'>
+                                <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                    <span className='text-white'>Characters 腳色:</span>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    <CharSelect />
+                                    <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
+                                        <span className='text-white'>?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`my-1 ${(Number.isInteger(charID)&&charID!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
+                                <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                    <span className='text-white'>Parts 部位:</span>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    <PartSelect />
+                                    <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="PartSelectHint">
+                                        <span className='text-white'>?</span>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div className={`my-1 ${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:items-start max-[400px]:!flex-col`}>
+                                <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                    <span className='text-white'>Main 主屬性:</span>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    <MainAffixSelect />
+                                    <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)!==1&&(parseInt(partsIndex)!==2)?'':'hidden')}`} data-tooltip-id="MainAffixHint">
+                                        <span className='text-white'>?</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={`my-1 ${(MainSelectOptions!==undefined&&MainSelectOptions!=='undefined'&&partsIndex!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[600px]:!flex-col max-[600px]:text-center max-[400px]:text-left`}>
+                                <div className='text-right w-[200px] max-[600px]:w-[100%] max-[600px]:text-center max-[400px]:text-left'>
+                                    <span className='text-white'>SubAffix 副屬性:</span>
+                                </div>
+                                <div className='flex flex-row items-start justify-center'>
+                                    <div className='flex flex-col'>
+                                        <SubAffixSelect index={0} />
+                                        <SubAffixSelect index={1} />
+                                        <SubAffixSelect index={2} />
+                                        <SubAffixSelect index={3} />
+                                    </div>
+                                    <div className='hintIcon ml-1 mt-1 overflow-visible'data-tooltip-id="SubAffixHint">
+                                        <span className='text-white'>?</span>
+                                    </div>  
+                                </div>
+                            </div>
+                            <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col ${(partsIndex===undefined)?'hidden':''}`}>
+                                <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
+                                    <span className='text-white'>Affix 有效詞條:</span>
+                                </div>
+                                <div className='flex flex-row items-center'>
+                                    <StandardSelect />
+                                </div>
+                            </div>
+                            <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
+                                <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
+                                    <span className='text-white'>Params 參數:</span>
+                                </div>
+                                <ShowStand />
+                            </div>
+                            <div className={`${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 mb-2 max-w-[400px] flex flex-row [&>*]:mr-2 justify-end max-[400px]:justify-start`}>
+                                <div className='flex flex-row mt-1'>
+                                    <button className='processBtn mr-2 whitespace-nowrap' 
+                                        onClick={()=>calScore()} 
+                                        disabled={!processBtn}>計算分數</button>
+                                    <button className='processBtn mr-2 whitespace-nowrap' 
+                                    onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
-            <div className='flex flex-row flex-wrap'>
-                <div className='flex flex-row flex-wrap w-1/2 max-[1200px]:w-[100%]'>
-                    <div className='flex flex-col mt-2'>
-                        <div className='flex flex-row [&>*]:mr-2 my-3 items-center max-[400px]:!flex-col max-[400px]:items-start'>
-                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
-                                <span className='text-white'>Characters 腳色:</span>
-                            </div>
-                            <div className='flex flex-row items-center'>
-                                <CharSelect />
-                                <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="CharHint">
-                                    <span className='text-white'>?</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`my-1 ${(Number.isInteger(charID)&&charID!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
-                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
-                                <span className='text-white'>Parts 部位:</span>
-                            </div>
-                            <div className='flex flex-row items-center'>
-                                <PartSelect />
-                                <div className='hintIcon ml-1 overflow-visible'data-tooltip-id="PartSelectHint">
-                                    <span className='text-white'>?</span>
-                                </div>   
-                            </div>
-                        </div>
-                        <div className={`my-1 ${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:items-start max-[400px]:!flex-col`}>
-                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
-                                <span className='text-white'>Main 主屬性:</span>
-                            </div>
-                            <div className='flex flex-row items-center'>
-                                <MainAffixSelect />
-                                <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)!==1&&(parseInt(partsIndex)!==2)?'':'hidden')}`} data-tooltip-id="MainAffixHint">
-                                    <span className='text-white'>?</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={`my-1 ${(MainSelectOptions!==undefined&&MainSelectOptions!=='undefined'&&partsIndex!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[600px]:!flex-col max-[600px]:text-center max-[400px]:text-left`}>
-                            <div className='text-right w-[200px] max-[600px]:w-[100%] max-[600px]:text-center max-[400px]:text-left'>
-                                <span className='text-white'>SubAffix 副屬性:</span>
-                            </div>
-                            <div className='flex flex-row items-start justify-center'>
-                                <div className='flex flex-col'>
-                                    <SubAffixSelect index={0} />
-                                    <SubAffixSelect index={1} />
-                                    <SubAffixSelect index={2} />
-                                    <SubAffixSelect index={3} />
-                                </div>
-                                <div className='hintIcon ml-1 mt-1 overflow-visible'data-tooltip-id="SubAffixHint">
-                                    <span className='text-white'>?</span>
-                                </div>  
-                            </div>
-                        </div>
-                        <div className={`mt-4 [&>*]:mr-2 flex flex-row items-baseline max-[400px]:!flex-col ${(partsIndex===undefined)?'hidden':''}`}>
-                            <div className='text-right w-[200px]  max-[400px]:text-left max-[600px]:w-[120px]'>
-                                <span className='text-white'>Affix 有效詞條:</span>
-                            </div>
-                            <div className='flex flex-row items-center'>
-                                <StandardSelect />
-                            </div>
-                        </div>
-                        <div className={`mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col ${(selfStand.length===0)?'hidden':''}`} >
-                            <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
-                                <span className='text-white'>Params 參數:</span>
-                            </div>
-                            <ShowStand />
-                        </div>
-                        <div className={`${(Number.isInteger(parseInt(partsIndex)))?'':'hidden'} mt-2 mb-2 max-w-[400px] flex flex-row [&>*]:mr-2 justify-end max-[400px]:justify-start`}>
-                            <div className='flex flex-row mt-1'>
-                                <button className='processBtn mr-2 whitespace-nowrap' 
-                                    onClick={()=>calScore()} 
-                                    disabled={!processBtn}>計算分數</button>
-                                <button className='processBtn mr-2 whitespace-nowrap' 
-                                onClick={()=>saveRecord()} disabled={!isSaveAble}>儲存紀錄</button>
-                            </div>
-                        </div>
+            <div className={`w-1/2 max-[1200px]:w-[100%] ml-2 bg-[rgba(0,0,0,0.5)] rounded-md p-1 h-fit`} id="historyData" >
+                <div className='flex flex-row items-center'>
+                    <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
+                    <div className='hintIcon ml-2 overflow-visible'
+                        data-tooltip-id="HistoryHint">
+                        <span className='text-white'>?</span>
                     </div>
                 </div>
-                <div className={`w-1/2 max-[1200px]:w-[100%]  my-4 `}
-                    id="historyData" >
-                    <div className='flex flex-row items-center'>
-                        <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
-                        <div className='hintIcon ml-2 overflow-visible'
-                            data-tooltip-id="HistoryHint">
-                            <span className='text-white'>?</span>
-                        </div>
-                    </div>
-                    <div className='flex flex-row flex-wrap h-max max-h-[600px] overflow-y-scroll hiddenScrollBar max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
-                        <PastPreviewList_simulator />
-                    </div>
+                <div className='flex flex-row flex-wrap h-max max-h-[600px] overflow-y-scroll hiddenScrollBar max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
+                    <PastPreviewList_simulator />
                 </div>
             </div>
-            <div className='flex flex-row mb-3 flex-wrap'>
-                <div className={`border-t-4 border-gray-600 w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
-                    <div className={`mt-3 flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
+            <div className={`flex flex-row my-3 flex-wrap bg-[rgba(0,0,0,0.5)] w-full p-1 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
+                <div className={`w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
+                    <div className={`flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <RelicData   mode={'Simulator'} button={true}/>
                     </div>
-                    <div className={`mt-3 w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
+                    <div className={`w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <StandDetails />
                     </div>
-                    <div className='mt-3 flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] max-[500px]:w-4/5 max-[500px]:mx-auto' id="resultDetails">
+                    <div className='flex flex-row flex-wrap w-1/2 max-[700px]:w-[100%] max-[500px]:w-4/5 max-[500px]:mx-auto ' id="resultDetails">
                         <Result ExpRate={ExpRate} 
                                 Rscore={Rscore} 
                                 statusMsg={statusMsg} 

@@ -6,10 +6,10 @@
 
 .intro{
     background: linear-gradient(
-        210deg, 
-        rgba(0, 0, 0, .2) 0%, 
+        320deg, 
+        rgba(255, 255, 255,0.2) 0%, 
         rgba(118, 118, 118, 0.2) 50%, 
-        rgba(255, 255, 255,0.2) 100%
+        rgba(0, 0, 0,0.2) 100%
     );
 
     box-shadow: 0 20px 30px #00000080;

@@ -150,7 +150,7 @@ const RelicData=React.memo(({mode,button})=>{
                                 <div>
                                     <span className='text-white'>下方會顯示出該遺器的</span>
                                 </div>
-                                <ul>
+                                <ul className='[&>li]:text-stone-400'>
                                     <li>1.所屬套裝</li>
                                     <li>2.主屬性及其數值</li>
                                     <li>3.副屬性及其數值</li>
