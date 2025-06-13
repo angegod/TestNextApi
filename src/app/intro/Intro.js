@@ -7,7 +7,7 @@ function Intro(){
     return(
         <div className='intro p-[1rem] rounded-md [&>div]:my-1 flex flex-col w-4/5 mx-auto max-[800px]:w-full'>
             <div className='flex flex-col'>
-                <span className='text-xl text-red-500 font-bold'>常見Q&A</span>
+                <span className='text-2xl text-red-500 font-bold'>常見Q&A</span>
                 <span className='text-white'>這裡列出比較常見的三個問題，如果有其他問題也歡迎利用巴哈私訊我</span>
             </div>
             <div className='flex flex-col [&>div]:my-1'>
@@ -57,11 +57,11 @@ function Intro(){
                 </div>
                 <div className='flex flex-col'>
                     <p className='text-white'><strong>A:變量骰子的獲得方式仍相當稀少，目前僅有以下幾種管道：</strong></p>
-                    <ol className='[&>li]:text-white'>
-                        <li><strong>合成獲取：</strong>消耗 3 個「自塑塵酯」可合成 1 顆變量骰子。</li>
-                        <li><strong>限時活動：</strong>官方會不定期透過活動發放，目前在 3.0 版本中曾贈送過 1 顆。</li>
-                        <li><strong>金靈兌換：</strong>可使用「旅伴金靈」兌換，1 個金靈可兌換 2 顆變量骰子。</li>
-                        <li><strong>無名客的贈禮：</strong>購買「無名客的贈禮」可額外獲得 1 顆骰子。</li>
+                    <ol className='[&>li]:text-stone-400'>
+                        <li><strong className='text-amber-600'>合成獲取：</strong>消耗 3 個「自塑塵酯」可合成 1 顆變量骰子。</li>
+                        <li><strong className='text-amber-600'>限時活動：</strong>官方會不定期透過活動發放，目前在 3.0 版本中曾贈送過 1 顆。</li>
+                        <li><strong className='text-amber-600'>金靈兌換：</strong>可使用「旅伴金靈」兌換，1 個金靈可兌換 2 顆變量骰子。</li>
+                        <li><strong className='text-amber-600'>無名客的贈禮：</strong>購買「無名客的贈禮」可額外獲得 1 顆骰子。</li>
                     </ol>                   
                 </div>
             </div>

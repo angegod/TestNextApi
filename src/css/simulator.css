@@ -92,3 +92,6 @@ input[type="number"]::-webkit-outer-spin-button {
   display: none; /* Chrome、Safari、Edge（新） */
 }
 
+.shadowBox{
+    box-shadow: 0 10px 30px #00000080;
+}

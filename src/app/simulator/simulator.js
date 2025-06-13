@@ -56,7 +56,8 @@ function Simulator(){
     const [relic,setRelic]=useState();
 
     //歷史紀錄
-    const historyData=useRef([]);
+    //const historyData=useRef([]);
+    const [historyData,setHistoryData]=useState([]);
     const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Ball 位面球','Rope 連結繩'];
     
     //是否可以儲存(防呆用)、是否可以立馬變更
@@ -102,7 +103,7 @@ function Simulator(){
         if(history!=null&&history.length>0){
             history=history.filter((h)=>h.version===version);
             localStorage.setItem('HistoryData',JSON.stringify(history));
-            historyData.current=history;
+            setHistoryData(history);
             updateStatus('先前紀錄已匯入!!','success');
         }else{
             updateStatus('尚未有任何操作紀錄!!','default');
@@ -112,13 +113,14 @@ function Simulator(){
     //刪除過往紀錄
     function updateHistory(index){
         //如果刪除紀錄是目前顯示的 則會清空目前畫面上的
-        historyData.current=historyData.current.filter((item,i)=>i!==index);
+        let newHistory = historyData.filter((item,i)=>i!==index);
+        setHistoryData(newHistory);
         showStatus('正在處理中......');
         //強制觸發刷新紀錄
         setTimeout(() => {
             updateStatus('成功刪除該紀錄!!','success')
         }, 0);
-        localStorage.setItem('HistoryData',JSON.stringify(historyData.current));
+        localStorage.setItem('HistoryData',JSON.stringify(newHistory));
     }
     //清除相關資料
     function clearData(){
@@ -135,10 +137,10 @@ function Simulator(){
         let selectChar=characters.find((c)=>c.charID===charID);
 
         //如果目前則沒有紀錄 則初始化
-        if(!historyData.current)
-            historyData.current=[];
-        else if(historyData.current.length>=maxHistoryLength)//如果原本紀錄超過6個 要先刪除原有紀錄
-            historyData.current=historyData.current.filter((item,i)=>i!==0);
+        if(!historyData)
+            setHistoryData([]);
+        else if(historyData.length>=maxHistoryLength)//如果原本紀錄超過6個 要先刪除原有紀錄
+           setHistoryData(historyData.filter((item,i)=>i!==0));
         
         //如果當前沒有任何資料則不予匯入
         if(!PieNums||ExpRate===undefined||!Rrank||Rscore===undefined){
@@ -170,8 +172,8 @@ function Simulator(){
         };
 
         //利用深拷貝區分原有資料
-        let oldHistory=JSON.parse(JSON.stringify(historyData.current));
-        historyData.current.push(data);
+        let oldHistory=JSON.parse(JSON.stringify(historyData));
+        setHistoryData((old)=>[...old,data]);
         updateStatus("已儲存",'success');
         const targetElement = document.getElementById('historyData');
         targetElement.scrollIntoView({ behavior: 'smooth' });
@@ -185,7 +187,7 @@ function Simulator(){
 
     //檢視過往紀錄
     function checkDetails(index){
-        let data=historyData.current[index];
+        let data=historyData[index];
         setRank(data.rank);
         setExpRate(data.expRate);
         setRscore(data.score);
@@ -401,7 +403,7 @@ function Simulator(){
         charID:charID,
         standDetails:standDetails.current,
         partArr:partArr,
-        historyData:historyData.current,
+        historyData:historyData,
         isChangeAble:isChangeAble,
         selfStand:selfStand,
         partsIndex:partsIndex,
@@ -429,7 +431,7 @@ function Simulator(){
     return(
     <SiteContext.Provider value={SimulatorStatus}>
         <div className='w-4/5 mx-auto max-[600px]:w-[90%] flex flex-row flex-wrap'>
-            <div className='flex flex-col  bg-[rgba(0,0,0,0.5)] p-1 rounded-md'>
+            <div className='flex flex-col  bg-[rgba(0,0,0,0.5)] p-2 rounded-md max-[1200px]:w-full'>
                 <div className='flex flex-row items-center'>
                     <h1 className='text-red-600 font-bold text-2xl'>遺器重洗模擬器</h1>
                     <div className='hintIcon ml-2 overflow-visible'
@@ -451,7 +453,7 @@ function Simulator(){
                                     </div>
                                 </div>
                             </div>
-                            <div className={`my-1 ${(Number.isInteger(charID)&&charID!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
+                            <div className={`my-1 mt-2 [&>*]:mr-2 flex flex-row max-[400px]:!flex-col max-[400px]:items-start`}>
                                 <div className='text-right w-[200px] max-[600px]:max-w-[120px] max-[400px]:text-left'>
                                     <span className='text-white'>Parts 部位:</span>
                                 </div>
@@ -517,11 +519,11 @@ function Simulator(){
                     
                 </div>
             </div>
-            <div className={`w-1/2 max-[1200px]:w-[100%] ml-2 bg-[rgba(0,0,0,0.5)] rounded-md p-1 h-fit`} id="historyData" >
+            <div className={`w-1/2 ml-2 bg-[rgba(0,0,0,0.5)] rounded-md p-2 h-fit max-[1200px]:w-[100%] max-[1200px]:ml-0 max-[1200px]:mt-2`} id="historyData" >
                 <div className='flex flex-row items-center'>
                     <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
                     <div className='hintIcon ml-2 overflow-visible'
-                        data-tooltip-id="HistoryHint">
+                        data-tooltip-id="HistoryHint"> 
                         <span className='text-white'>?</span>
                     </div>
                 </div>
@@ -529,7 +531,7 @@ function Simulator(){
                     <PastPreviewList_simulator />
                 </div>
             </div>
-            <div className={`flex flex-row my-3 flex-wrap bg-[rgba(0,0,0,0.5)] w-full p-1 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
+            <div className={`flex flex-row my-3 flex-wrap bg-[rgba(0,0,0,0.5)] w-full p-2 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
                 <div className={`w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
                     <div className={`flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <RelicData   mode={'Simulator'} button={true}/>

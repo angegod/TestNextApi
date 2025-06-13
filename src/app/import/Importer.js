@@ -561,7 +561,7 @@ function Importer(){
         <div className='flex flex-col w-4/5 mx-auto max-[600px]:w-[95%] rounded-md '>
             <div className='rounded-md'>
                 <div className='flex flex-row flex-wrap max-[600px]:w-[95%] '>
-                    <div className='flex flex-col w-2/5 bg-[rgba(0,0,0,0.5)] rounded-md  max-[1250px]:w-[100%]'>
+                    <div className='flex flex-col w-2/5 bg-[rgba(0,0,0,0.5)] rounded-md max-[1250px]:w-[100%] test'>
                         <div className='flex flex-row items-center ml-2 mt-2'>
                             <h1 className='text-red-600 font-bold text-2xl'>遺器匯入</h1>
                             <div className='hintIcon ml-2 overflow-visible' 
@@ -626,7 +626,7 @@ function Importer(){
                 </div>
             </div>
             
-            <div className={`flex flex-row flex-wrap mt-2 w-[100%] ${(!PieNums)?'hidden':''} bg-[rgba(0,0,0,0.5)] px-2 mb-5 rounded-md`} >
+            <div className={`flex flex-row flex-wrap mt-2 w-[100%] ${(!PieNums)?'hidden':''} bg-[rgba(0,0,0,0.5)] shadowBox px-2 mb-5 rounded-md`} >
                 <div className={`w-[100%] ${(PieNums===undefined)?'hidden':''}`}>
                     <RelicSelect />
                 </div>

@@ -5,12 +5,14 @@
 }
 
 .intro{
-    background: linear-gradient(
+    /*background: linear-gradient(
         320deg, 
         rgba(255, 255, 255,0.2) 0%, 
         rgba(118, 118, 118, 0.2) 50%, 
         rgba(0, 0, 0,0.2) 100%
-    );
+    );*/
+    background-color: rgba(0,0,0,0.5);
 
     box-shadow: 0 20px 30px #00000080;
 }
+

@@ -102,7 +102,7 @@ const RelicData=React.memo(({mode,button})=>{
         
         
         return(
-            <div className={`w-[100%] mb-5 my-1 ${(relic!==undefined)?'':'hidden'} max-[500px]:w-[330px] max-[400px]:w-[100%]`}>
+            <div className={`w-[100%] my-1 ${(relic!==undefined)?'':'hidden'} max-[500px]:w-[330px] max-[400px]:w-[100%]`}>
                 <div className='flex flex-row items-center'>
                     <span className='text-red-600 text-lg font-bold'>遺器資訊</span>
                     <div className='hintIcon ml-2 overflow-visible' data-tooltip-id="RelicDataHint">
@@ -218,6 +218,9 @@ const RelicData_simuldate=React.memo(({mode,button})=>{
                 case 4:
                     markcolor='rgb(219, 171, 15)';
                     break;
+                case 5:
+                    markcolor='#FF55FF';
+                    break;
                 default:
                     break;
             }
@@ -241,7 +244,7 @@ const RelicData_simuldate=React.memo(({mode,button})=>{
         })
         
         return(
-            <div className={`w-[100%] mb-5 my-1 max-[500px]:min-w-[330px]`}>
+            <div className={`w-[100%] my-1 max-[500px]:min-w-[250px]`}>
                 <div className='flex flex-row items-center'>
                     <span className='text-red-600 text-lg font-bold'>遺器資訊</span>
                     <div className='hintIcon ml-2 overflow-visible'
