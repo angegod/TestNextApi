@@ -42,11 +42,10 @@ function Intro(){
                     <img src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/feixiao.png`}
                                  alt="Good.png" width={25} height={25}/>
                 </div>
-                <div className='flex'>
-                    <span className='text-white'>A:這個就是為何要使用本工具了!本工具不僅可以根據你想要的詞條配置
-                        <span className='text-red-500 font-bold'>計算出每件遺器所有可能的強化組合</span>
-                        <span className='text-white'>以及計算出在這些組合中翻盤的機率</span>
-                    </span>                   
+                <div className='flex flex-col'>
+                    <span className='text-white'>A:這個就是為何要使用本工具了!本工具不僅可以根據你想要的詞條配置</span>
+                    <span className='text-red-500 font-bold'>計算出每件遺器所有可能的強化組合<span className='text-white'>以及計算出在這些組合中翻盤的機率</span></span>
+                                       
                 </div>
             </div>
             <div className="flex flex-col [&>div]:my-1 ">
@@ -56,7 +55,7 @@ function Intro(){
                                  alt="Good.png" width={25} height={25}/>
                 </div>
                 <div className='flex flex-col'>
-                    <p className='text-white'><strong>A:變量骰子的獲得方式仍相當稀少，目前僅有以下幾種管道：</strong></p>
+                    <p className='text-white'>A:變量骰子的獲得方式仍相當稀少，目前僅有以下幾種管道：</p>
                     <ol className='[&>li]:text-stone-400'>
                         <li><strong className='text-amber-600'>合成獲取：</strong>消耗 3 個「自塑塵酯」可合成 1 顆變量骰子。</li>
                         <li><strong className='text-amber-600'>限時活動：</strong>官方會不定期透過活動發放，目前在 3.0 版本中曾贈送過 1 顆。</li>

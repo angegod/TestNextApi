@@ -300,7 +300,6 @@ function Simulator(){
 
         // 接收 Worker 返回的訊息
         worker.onmessage = function (event) {
-            
             setExpRate(event.data.expRate);
             setRscore(event.data.relicscore)
             updateStatus('計算完畢!!','success');

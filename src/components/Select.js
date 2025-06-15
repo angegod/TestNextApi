@@ -412,7 +412,7 @@ const RelicSelect=React.memo(()=>{
     }else{
         return(<></>)
     }
-})
+});
 
 
 
