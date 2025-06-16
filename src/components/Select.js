@@ -41,16 +41,28 @@ const MainAffixSelect = React.memo(() => {
         ];
 
         return (
-            <select
-                defaultValue={MainSelectOptions}
-                onChange={(event) => {
-                    const val = event.target.value;
-                    setMainSelectOptions(val === 'undefined' ? undefined : val);
-                }}
-                disabled={!isChangeAble}
-                className='w-[150px] graySelect'>
-                {options}
-            </select>
+            <div className='flex flex-row items-baseline'>
+                <select
+                    defaultValue={MainSelectOptions}
+                    onChange={(event) => {
+                        const val = event.target.value;
+                        setMainSelectOptions(val === 'undefined' ? undefined : val);
+                    }}
+                    disabled={!isChangeAble}
+                    className='w-[150px] graySelect'>
+                    {options}
+                </select>
+                <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)===1||(parseInt(partsIndex)===2)?'hidden':'')}`} data-tooltip-id="MainAffixHint">
+                    <span className='text-white'>?</span>
+                </div>
+                <Tooltip id="MainAffixHint"  
+                    place="right-start" 
+                    render={()=>
+                        <div className='flex flex-col max-w-[230px] '>
+                            <span className='text-white'>選擇遺器的主詞條</span>
+                        </div>
+                    }/>
+            </div>
         );
     }
 });

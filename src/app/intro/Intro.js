@@ -5,7 +5,7 @@ import "@/css/intro.css";
 function Intro(){
     //之後intro頁面可能會改成json控管
     return(
-        <div className='intro p-[1rem] rounded-md [&>div]:my-1 flex flex-col w-4/5 mx-auto max-[800px]:w-full'>
+        <div className='intro p-[1rem] mb-3 rounded-md [&>div]:my-1 flex flex-col w-4/5 mx-auto h-[90vh] justify-around max-[800px]:!w-[95%] max-[800px]:h-fit'>
             <div className='flex flex-col'>
                 <span className='text-2xl text-red-500 font-bold'>常見Q&A</span>
                 <span className='text-white'>這裡列出比較常見的三個問題，如果有其他問題也歡迎利用巴哈私訊我</span>

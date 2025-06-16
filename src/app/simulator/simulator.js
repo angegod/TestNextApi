@@ -397,7 +397,6 @@ function Simulator(){
         setIsChangeAble(true);
     }
 
-
     let SimulatorStatus = {
         charID:charID,
         standDetails:standDetails.current,
@@ -469,9 +468,6 @@ function Simulator(){
                                 </div>
                                 <div className='flex flex-row items-center'>
                                     <MainAffixSelect />
-                                    <div className={`hintIcon ml-1 overflow-visible ${(parseInt(partsIndex)!==1&&(parseInt(partsIndex)!==2)?'':'hidden')}`} data-tooltip-id="MainAffixHint">
-                                        <span className='text-white'>?</span>
-                                    </div>
                                 </div>
                             </div>
                             <div className={`my-1 ${(MainSelectOptions!==undefined&&MainSelectOptions!=='undefined'&&partsIndex!==undefined)?'':'hidden'} mt-2 [&>*]:mr-2 flex flex-row max-[600px]:!flex-col max-[600px]:text-center max-[400px]:text-left`}>
@@ -530,7 +526,7 @@ function Simulator(){
                     <PastPreviewList_simulator />
                 </div>
             </div>
-            <div className={`flex flex-row my-3 flex-wrap bg-[rgba(0,0,0,0.5)] w-full p-2 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
+            <div className={`flex flex-row my-3 flex-wrap shadowBox bg-[rgba(0,0,0,0.5)] w-full p-2 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
                 <div className={`w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
                     <div className={`flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <RelicData   mode={'Simulator'} button={true}/>
@@ -565,13 +561,7 @@ function Simulator(){
                             <span className='text-white'>"主詞條"跟"副詞條"區塊中會自動帶入該部位詞條種類</span>
                         </div>
                     }/>
-            <Tooltip id="MainAffixHint"  
-                    place="right-start" 
-                    render={()=>
-                        <div className='flex flex-col max-w-[230px] '>
-                            <span className='text-white'>選擇遺器的主詞條</span>
-                        </div>
-                    }/>
+
             <Tooltip id="SubAffixHint"  
                     place="right-start" 
                     render={()=>
