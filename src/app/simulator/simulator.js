@@ -4,15 +4,14 @@ import characters from '../../data/characters';
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-import '../../css/simulator.css';
+import '@/css/simulator.css';
 import '@/css/intro.css';
 import AffixName from '@/data/AffixName';
 
 import Result from '@/components/Result';
 import { StandDetails ,ShowStand } from '@/components/StandDetails';
-import { RelicData_simuldate as RelicData} from '@/components/RelicData';
+import { RelicData_simulate as RelicData} from '@/components/RelicData';
 import { PastPreviewList_simulator } from '@/components/PastPreviewList';
-import { PastPreview_simulator as PastPreview } from '@/components/PastPreview';
 import { CharSelect,PartSelect,StandardSelect,MainAffixSelect,SubAffixSelect } from '@/components/Select';
 import SubAffixHint from '@/components/Hint/SubAffixHint';
 import HintSimulator from '@/components/Hint/HintSimulator';
@@ -529,7 +528,7 @@ function Simulator(){
             <div className={`flex flex-row my-3 flex-wrap shadowBox bg-[rgba(0,0,0,0.5)] w-full p-2 ${(PieNums===undefined)?'hidden':''} rounded-md`}>
                 <div className={`w-full flex flex-row flex-wrap ${(PieNums===undefined)?'hidden':''}`}>
                     <div className={`flex flex-row flex-wrap w-[18vw]  max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
-                        <RelicData   mode={'Simulator'} button={true}/>
+                        <RelicData  mode={'Simulator'} button={true}/>
                     </div>
                     <div className={`w-1/4 max-[700px]:w-[50%] ${(PieNums===undefined)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`} >
                         <StandDetails />
@@ -594,25 +593,6 @@ function Simulator(){
                                 <span className='!text-red-500'>"過往紀錄"最多只保留6筆</span>
                                 <span className='!text-yellow-500'>如果在已有6筆資料的情況再新增，則會從最舊的紀錄開始覆蓋掉</span>
                             </div>
-                        </div>
-                    </div>
-                }/>
-            <Tooltip id="RelicDataHint"  
-                place="right-start"
-                render={()=>
-                    <div className='flex flex-col [&>span]:text-white max-w-[250px] p-1'>
-                        <div>
-                            <span className='text-white'>下方會顯示出該遺器的</span>
-                        </div>
-                        <ul>
-                            <li>1.所屬套裝</li>
-                            <li>2.主屬性</li>
-                            <li>3.副屬性</li>
-                            <li>4.副屬性數值</li>
-                            <li>5.副屬性強化次數</li>
-                        </ul>
-                        <div className='mt-2'>
-                            <span className='text-white'>此外下方有個重洗模擬按鈕，此功能將會帶入這個遺器的資訊進行重洗模擬</span>
                         </div>
                     </div>
                 }/>

@@ -8,14 +8,14 @@ const list=[{
     engname:'simulator',
     image:'simulator.png',
     mode: '手動輸入',
-    description:"遺器只存在於背包中，請點我"
+    description:"背包中的遺器"
 },{
     link:'/import',
     name:'遺器重洗匯入',
     engname:'importer',
     image:'importer.png',
     mode:'API自動匯入',
-    description:"查詢展示櫃角色身上的遺器，請點我"
+    description:"展示櫃角色身上的遺器"
 }];;
 
 
@@ -28,11 +28,11 @@ function Menu({children}) {
                       className='mr-3 flex flex-col bg-gray-700 min-w-[100px] rounded-md justify-center px-2'
                       key={'menu' + i}>
                       <Link href={m.link} className='text-center'>
-                        <span className='text-gray-500 font-bold text-lg max-[400px]:text-sm'>
+                        <span className='text-gray-500 font-bold text-lg max-[500px]:text-sm'>
                           {m.name}
                         </span>
                       </Link>
-                      <span className='text-lg text-gray-400 text-center max-[400px]:text-sm'>
+                      <span className='text-lg text-gray-400 text-center max-[500px]:text-sm'>
                         {m.engname}
                       </span>
                   </div>
@@ -48,7 +48,7 @@ function Menu({children}) {
 function MainMenu(){
     return(
         <div className={`w-[100%] h-[80vh] relative max-[900vh]:h-[100vh] `}>
-            <div className='w-4/5 flex flex-col mx-auto max-[900px]:w-[90%]'>
+            <div className='w-4/5 flex flex-col top-[10vh] relative mx-auto max-[900px]:w-[90%] max-[900px]:top-[5vh]'>
                 <div className='text-center h-fit flex flex-col'>
                     <div className='flex flex-col mt-5'>
                         <span className='font-bold text-2xl text-gray-200'>遺器重洗模擬器 </span>
@@ -62,19 +62,19 @@ function MainMenu(){
                     {list.map((m, i) => (
                         <div key={'menu' + i} className='w-2/5 flex flex-col max-[900px]:w-[45%]'>
                             <div className='subMenu arrow-down-box'>
-                                <span className='font-bold text-white italic'>{m.description}</span>
+                                <span className='font-bold text-white italic max-[500px]:text-sm'>{m.description}</span>
                             </div>
                             <Link href={m.link} className='text-center'>
-                                <div className='flex flex-col bg-gray-700 rounded-sm hover:bg-gray-600'>
+                                <div className='flex flex-col bg-gray-700/70 rounded-sm hover:bg-gray-600/70'>
                                     <div className='flex flex-col justify-center my-2'>
                                         <Image 
                                             src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}/image/${m.image}`}
                                             alt="Logo"
                                             width={200}
                                             height={200}
-                                            className='mx-auto'/>
-                                        <span className='text-xl text-gray-400 font-bold'>{m.mode}</span>
-                                        <span className='text-lg text-gray-400 font-bold'>{m.engname}</span>
+                                            className='mx-auto max-[500px]:!w-[150px]'/>
+                                        <span className='text-xl text-gray-400 font-bold max-[500px]:text-base'>{m.mode}</span>
+                                        <span className='text-lg text-gray-400 font-bold max-[500px]:text-base'>{m.engname}</span>
                                     </div> 
                                 </div>
                             </Link>

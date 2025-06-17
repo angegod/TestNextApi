@@ -399,24 +399,24 @@ const RelicSelect=React.memo(()=>{
             const reliclink = `https://raw.githubusercontent.com/Mar-7th/StarRailRes/master/${r.relic.icon}`;
     
             return(
-                <div className={`rounded-[50px] mx-2 mb-2 cursor-pointer p-2 border-[3px] max-[400px]:mx-1 max-[400px]:border-[2px] ${(relicIndex === i)?"border-yellow-600":"border-gray-300"}`} 
+                <div className={`rounded-[50px] mx-2 mb-2 cursor-pointer p-2 border-[3px] max-[500px]:mx-1 max-[500px]:p-1 max-[500px]:border-[2px] ${(relicIndex === i)?"border-yellow-600":"border-gray-300"}`} 
                     key={'RelicSelect'+i}
                     onClick={()=>setRelicIndex(i)}>
-                    <img src={reliclink} alt='relic' width={50} height={50}/>
+                    <img src={reliclink} alt='relic' className='w-[50px] max-[500px]:w-[40px] '/>
                 </div>
             )
         })
     
         return(
             <div className='w-4/5 flex flex-col pt-1 max-[500px]:w-[100%]'>
-                <div className='flex flex-row items-baseline'>
+                <div className='flex flex-row items-baseline max-[500px]:w-4/5 max-[500px]:mx-auto'>
                     <span className='text-red-600 font-bold text-lg'>遺器匹配結果</span>
                     <div className='hintIcon ml-2 overflow-visible'
                         data-tooltip-id="RelicSelectHint">
                         <span className='text-white'>?</span>
                     </div>
                 </div>
-                <div className='flex flex-row flex-wrap my-2 max-[900px]:w-[100%]'>
+                <div className='flex flex-row flex-wrap max-[500px]:justify-center my-2 max-[900px]:w-[100%]'>
                     {list}
                 </div>
             </div>

@@ -612,14 +612,14 @@ function Importer(){
                         </div>
                     </div>
                     <div className={`w-[55%] pb-3 pt-1 ${(historyData.length===0)?'hidden':''} flex-wrap max-[1250px]:w-[100%] max-[1250px]:mb-5 ml-2 bg-[rgba(0,0,0,0.5)] rounded-md max-[1250px]:ml-0 max-[1250px]:mt-2`}>
-                        <div className='flex flex-row items-baseline px-2'>
+                        <div className='flex flex-row items-baseline px-2 max-[600px]:justify-center'>
                             <span className='text-red-600 text-lg font-bold'>過往紀錄</span>
                             <div className='hintIcon ml-2 overflow-visible'
                                 data-tooltip-id="HistoryHint">
                                 <span className='text-white'>?</span>
                             </div>
                         </div>
-                        <div className='h-[300px] overflow-y-scroll hiddenScrollBar flex flex-row flex-wrap max-[600px]:!flex-col max-[600px]:!flex-nowrap'>
+                        <div className='h-[300px] overflow-y-scroll hiddenScrollBar flex flex-row flex-wrap max-[600px]:!flex-col max-[600px]:!flex-nowrap max-[600px]:items-center'>
                             <PastPreviewList  />
                         </div> 
                     </div>
@@ -627,7 +627,7 @@ function Importer(){
             </div>
             
             <div className={`flex flex-row flex-wrap mt-2 w-[100%] ${(!PieNums)?'hidden':''} bg-[rgba(0,0,0,0.5)] shadowBox px-2 mb-5 rounded-md`} >
-                <div className={`w-[100%] ${(PieNums===undefined)?'hidden':''}`}>
+                <div className={`w-[100%] ${(PieNums===undefined)?'hidden':''} max-[500px]:justify-center`}>
                     <RelicSelect />
                 </div>
                 <div className={`mt-3 flex flex-row flex-wrap w-1/4  max-[700px]:w-[50%] ${(!PieNums)?'hidden':''} max-[500px]:w-4/5 max-[500px]:mx-auto`}>

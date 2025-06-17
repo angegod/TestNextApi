@@ -21,7 +21,7 @@ body{
 }
 
 .subMenu{
-    @apply w-1/2 min-w-[30vw] mb-5 text-center h-[50px] bg-stone-600 rounded-sm mx-auto flex flex-col justify-center  relative;
+    @apply w-1/2 min-w-[30vw] mb-5 text-center h-[50px] bg-stone-600/80 rounded-sm mx-auto flex flex-col justify-center  relative;
     @apply max-[600px]:w-[150px] max-[600px]:h-[10vh] max-[600px]:px-1
 }
 
