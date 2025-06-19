@@ -4,6 +4,7 @@ import '@/css/globals.css';
 
 import {Menu,MainMenu} from '@/components/Menu';
 import Footer from '@/components/Footer'
+import Head from 'next/head';
 
 import { StatusToastProvider } from '@/context/StatusMsg.js';
 import { usePathname } from 'next/navigation';
