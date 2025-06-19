@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .processBtn{
     color: theme('colors.white');
     border-color: theme('colors.white');
