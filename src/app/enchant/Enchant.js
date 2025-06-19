@@ -353,7 +353,6 @@ const Enchant=React.memo(()=>{
                             {(mode==="Importer")?
                                 <RelicData  />:
                                 <RelicData_simulate />}
-                            
                         </div>
                         <div className='w-[45%] h-fit max-[900px]:w-fit bg-[rgba(0,0,0,0.5)] p-2 rounded-md ml-1 max-[900px]:ml-0 max-[900px]:my-2'>
                             <StandDetails />
