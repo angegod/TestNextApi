@@ -9,8 +9,7 @@ import RelicDataHint from './Hint/RelicDataHint';
 
 //顯示儀器分數區間
 const RelicData=React.memo(({mode,button})=>{
-    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(SiteContext);
-    const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Rope 連結繩','Ball 位面球'];
+    const {relic,Rrank,Rscore,standDetails,isChangeAble,partArr} = useContext(SiteContext);
     const router = useRouter();
     
     //導航至模擬強化頁面
@@ -157,8 +156,8 @@ const RelicData=React.memo(({mode,button})=>{
 });
 
 const RelicData_simulate=React.memo(({mode,button})=>{
-    const {relic,Rrank,Rscore,standDetails,isChangeAble} = useContext(SiteContext);
-    const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Ball 位面球','Rope 連結繩'];
+    const {relic,Rrank,Rscore,standDetails,isChangeAble,partArr} = useContext(SiteContext);
+    
     const router = useRouter();
     //導航至模擬強化頁面
     function navEnchant(){
@@ -170,8 +169,8 @@ const RelicData_simulate=React.memo(({mode,button})=>{
             mode:mode
         }
 
+        //next專案必須這麼寫
         localStorage.setItem('EnchantData',JSON.stringify(sendData));
-
         router.push('./enchant');
     }
 

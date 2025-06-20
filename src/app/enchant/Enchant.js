@@ -36,6 +36,8 @@ const Enchant=React.memo(()=>{
         {rank:'D',stand:0 ,color:'rgb(22,163,74)',tag:'D'}
     ];
 
+    const partArr=['Head 頭部','Hand 手部','Body 軀幹','Feet 腳部','Ball 位面球','Rope 連結繩'];
+
     //進入頁面初始化自動執行一次
     useEffect(()=>{
         if(localStorage.getItem('EnchantData')!==null&&localStorage.getItem('EnchantData')!==undefined){
@@ -44,7 +46,7 @@ const Enchant=React.memo(()=>{
         }
     },[])
 
-    
+   
 
 
     useEffect(()=>{
@@ -341,7 +343,8 @@ const Enchant=React.memo(()=>{
         Rscore:Rscore,
         standDetails:standDetails,
         isChangeAble:isChangeAble,
-        standDetails:standDetails
+        standDetails:standDetails,
+        partArr:partArr
     };
     
     return(
